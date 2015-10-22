@@ -1,0 +1,13 @@
+set bmk:save-passwords true
+ 
+alias j jobs
+alias jv jobs -v
+alias q queue
+alias qs queue stop
+alias k kill
+alias ka kill all
+alias data cd private/rtorrent/data/
+alias down lcd ~/Downloads
+alias movies lcd ~/Movies
+alias m mirror -c --use-pget-n=5
+alias p pget -c -n 5

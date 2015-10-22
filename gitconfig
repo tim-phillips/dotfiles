@@ -1,0 +1,15 @@
+[alias]
+    b = branch
+    s = status
+    co = checkout
+    ci = commit
+    tree = log --graph --decorate --pretty=oneline --abbrev-commit
+    last = log -1 HEAD
+[user]
+    name = Tim Phillips
+    email = tim.p.phillips@gmail.com
+[filter "media"]
+    clean = git-media-clean %f
+    smudge = git-media-smudge %f
+[push]
+    default = simple
