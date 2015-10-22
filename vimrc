@@ -1,17 +1,24 @@
-set nocompatible               " be iMproved
-filetype off                   " required!
+set nocompatible
 
 set background=dark
 colorscheme solarized
 
-" Enable list of buffers at top of window and just show filename
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#fnamemod = ':t'
+" ================ General Config ====================
 
-" ==========================================================
-" Plugins
-" ==========================================================
+set number                  "Display line numbers
+set backspace=2             "Allow backspacing over autoindent, EOL, and BOL
+set history=1000
+set showcmd                 "Show incomplete normal mode commands as I type.
+set visualbell              "No sounds
+set autoread                "Reload files changed outside vim
+set hidden
+syntax on                   "Syntax highlighing
+let mapleader=","
+"set showmode               "Show current mode down the bottom
 
+" ================ Plugins ====================
+
+filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 let g:vundle_default_git_proto='git'
 let g:airline_powerline_fonts = 1
@@ -45,13 +52,10 @@ Plugin 'chase/vim-ansible-yaml'
 call vundle#end()
 filetype plugin indent on
 
+" ================ Shortcuts ====================
+
 autocmd FileType python nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 
-" ==========================================================
-" Shortcuts
-" ==========================================================
-
-let mapleader=","
 nnoremap ; :
 inoremap jj <ESC>
 inoremap jk <ESC>
@@ -85,9 +89,7 @@ cmap w!! w !sudo tee % >/dev/null
 " Basic Settings
 " ==========================================================
 
-syntax on                     " syntax highlighing
 filetype on                   " try to detect filetypes
-set number                    " display line numbers
 set title                     " show title in console title bar
 set wildmenu                  " menu completion in command mode on <Tab>
 set wildmode=full             " <Tab> cycles between all matching choices.
@@ -103,28 +105,17 @@ set wildignore+=*/tmp/*,.git,*.pyc,.DS_Store,*.swp,*.zip
 set wildignore+=eggs/**
 set wildignore+=*.egg-info/**
 
-" Set working directory
-"nnoremap <leader>. :lcd %:p:h<CR>
-
-" Disable the colorcolumn when switching modes.  Make sure this is the
-" first autocmd for the filetype here
-"autocmd FileType * setlocal colorcolumn=0
-
+"autocmd FileType python setlocal shiftwidth=2 tabstop=2 sts=2
 autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 sts=2
 autocmd FileType coffee setlocal shiftwidth=2 tabstop=2 sts=2
 autocmd FileType html setlocal shiftwidth=2 tabstop=2 sts=2
 autocmd FileType jade setlocal shiftwidth=2 tabstop=2 sts=2
 
 """ Moving Around/Editing
-"set cursorline              " have a line indicate the cursor location
 set ruler                   " show the cursor position all the time
 set nostartofline           " Avoid moving cursor to BOL when jumping around
 set virtualedit=block       " Let cursor move past the last char in <C-v> mode
 set scrolloff=3             " Keep 3 context lines above and below the cursor
-set backspace=2             " Allow backspacing over autoindent, EOL, and BOL
-"set showmatch               " Briefly jump to a paren once it's balanced
-"set wrap                    " Wrap text
-"set linebreak               " don't wrap textin the middle of a word
 set autoindent              " always set autoindenting on
 set smartindent             " use smart indent if there is no indent file
 set tabstop=4               " <tab> inserts 4 spaces 
@@ -136,6 +127,9 @@ set formatoptions=tcroql    " Setting text and comment formatting to auto
 "set textwidth=80            " lines are automatically wrapped after 80 columns
 "set nofoldenable            " turn off folding
 "set colorcolumn=80          " highlight column 80 (where words will wrap)
+"set showmatch               " Briefly jump to a paren once it's balanced
+"set wrap                    " Wrap text
+"set linebreak               " don't wrap textin the middle of a word
 
 """ Reading/Writing
 "set autowriteall            " Don't bother me about changed buffers
@@ -145,7 +139,6 @@ set formatoptions=tcroql    " Setting text and comment formatting to auto
 
 """ Messages, Info, Status
 set ls=2                    " always show status line
-set showcmd                 " Show incomplete normal mode commands as I type.
 set report=0                " : commands always print changed line count.
 set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
 set ruler                   " Show some info, even without statuslines.
@@ -157,14 +150,16 @@ set smartcase               " unless uppercase letters are used in the regex.
 set hlsearch                " Highlight searches by default.
 set incsearch               " Incrementally search while typing a /regex
 
+" ================ Persistent Undo ==================
+
 if exists("+undofile")
   if isdirectory($HOME . '/.vim/undo') == 0
     :silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
   endif
-  set undodir=./.vim-undo//
-  set undodir+=~/.vim/undo//
+  set undodir=~/.vim/undo//
   set undofile
 endif
+
 hi DiffText gui=underline guibg=red guifg=black
 
 " iTerm cursor shape
@@ -182,9 +177,7 @@ let g:ctrlp_custom_ignore = {
 " Use the nearest .git directory as the cwd
 let g:ctrlp_working_path_mode = 'r'
 
-" ==========================================================
-" Learning Vim
-" ==========================================================
+" ============== Learning Vim ================
 
 " No arrow keys!
 nnoremap <up> <nop>
@@ -198,9 +191,11 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
-" ==========================================================
-" Extras
-" ==========================================================
+" ================ Exras ==================
+
+" Enable list of buffers at top of window and just show filename
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Paste from clipboard
 "map <leader>p "+p
