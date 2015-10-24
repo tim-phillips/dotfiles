@@ -16,6 +16,15 @@ syntax on                   "Syntax highlighing
 let mapleader=","
 "set showmode               "Show current mode down the bottom
 
+" ================ Indentation ====================
+
+set autoindent              " always set autoindenting on
+set smartindent             " use smart indent if there is no indent file
+set shiftwidth=2            " And an indent level is 4 spaces wide.
+set softtabstop=2           " <BS> over an autoindent deletes all spaces.
+set tabstop=2               " <tab> inserts 4 spaces 
+set expandtab               " Use spaces, not tabs, for autoindent/tab key.
+
 " ================ Plugins ====================
 
 filetype off
@@ -115,20 +124,16 @@ autocmd FileType jade setlocal shiftwidth=2 tabstop=2 sts=2
 set ruler                   " show the cursor position all the time
 set nostartofline           " Avoid moving cursor to BOL when jumping around
 set virtualedit=block       " Let cursor move past the last char in <C-v> mode
-set scrolloff=3             " Keep 3 context lines above and below the cursor
-set autoindent              " always set autoindenting on
-set smartindent             " use smart indent if there is no indent file
-set tabstop=4               " <tab> inserts 4 spaces 
-set shiftwidth=4            " And an indent level is 4 spaces wide.
-set softtabstop=4           " <BS> over an autoindent deletes all spaces.
-set expandtab               " Use spaces, not tabs, for autoindent/tab key.
+set scrolloff=6             " Keep 6 context lines above and below the cursor
+set sidescrolloff=15
+set sidescroll=1
 set shiftround              " rounds indent to a multiple of shiftwidth
 set formatoptions=tcroql    " Setting text and comment formatting to auto
+set nowrap                    " Wrap text
 "set textwidth=80            " lines are automatically wrapped after 80 columns
 "set nofoldenable            " turn off folding
 "set colorcolumn=80          " highlight column 80 (where words will wrap)
 "set showmatch               " Briefly jump to a paren once it's balanced
-"set wrap                    " Wrap text
 "set linebreak               " don't wrap textin the middle of a word
 
 """ Reading/Writing
@@ -217,3 +222,7 @@ nnoremap k gk
 "set completeopt=longest,menuone
 "inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 "inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+" https://www.jeffknupp.com/blog/2013/12/04/my-development-environment-for-python/
+" https://github.com/jeffknupp/dotfiles/blob/master/.vimrc
+" https://github.com/skwp/dotfiles/blob/master/vimrc

@@ -1,10 +1,9 @@
-[[ -r ~/.bashrc ]] && . ~/.bashrc
-
 # aliases
-alias gl='git log --oneline --graph --decorate --all'
 alias ts_sync='rsync -av /Users/Tim/Audio/ts/ /Volumes/wudduwuddup/audio/ts'
 alias s='git status'
+alias diff='git diff'
 alias c='git commit -m'
+alias gl='git log --oneline --graph --decorate --all'
 alias serve='python -m SimpleHTTPServer 8000'
 
 export CLICOLOR=1

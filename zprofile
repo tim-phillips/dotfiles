@@ -5,6 +5,8 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
+emulate sh -c '. ~/.profile'
+
 #
 # Browser
 #
