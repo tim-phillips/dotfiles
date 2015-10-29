@@ -9,6 +9,7 @@ alias serve='python -m SimpleHTTPServer 8000'
 export CLICOLOR=1
 export TERM=xterm-256color
 export EDITOR=vim
+TZ='America/Los_Angeles'; export TZ
 
 # virtualenvwrapper
 #export WORKON_HOME=$HOME/.virtualenvs
