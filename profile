@@ -20,10 +20,6 @@ TZ='America/Los_Angeles'; export TZ
 export LC_CTYPE=en_US.UTF-8
 #export LC_ALL=en_US.UTF-8
 
-# Theos
-#export THEOS=/opt/theos
-#export THEOS_DEVICE_IP=192.168.1.14 THEOS_DEVICE_PORT=22
-
 alias cp='cp -i'                          # Preferred 'cp' implementation
 alias mv='mv -i'                          # Preferred 'mv' implementation
 alias mkdir='mkdir -p'                    # Preferred 'mkdir' implementation
