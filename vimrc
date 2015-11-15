@@ -1,6 +1,6 @@
 set nocompatible
 
-set background=dark
+set background=light
 colorscheme solarized
 
 " ================ General Config ====================
