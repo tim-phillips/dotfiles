@@ -1,10 +1,12 @@
 # aliases
 alias ts_sync='rsync -av /Users/Tim/Audio/ts/ /Volumes/wudduwuddup/audio/ts'
 alias s='git status'
-alias diff='git diff'
+#alias diff='git diff' #interferes w unix diff tool
 alias c='git commit -m'
 alias gl='git log --oneline --graph --decorate --all'
 alias serve='python -m SimpleHTTPServer 8000'
+alias torrents='~/scripts/rsync-torrents.sh'
+alias syncferal='~/scripts/rsync-feral-to-local.sh'
 
 export CLICOLOR=1
 export TERM=xterm-256color
