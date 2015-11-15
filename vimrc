@@ -46,6 +46,8 @@ Plugin 'kien/ctrlp.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'mattn/emmet-vim'
 Plugin 'chase/vim-ansible-yaml'
+Plugin 'godlygeek/tabular'
+Plugin 'plasticboy/vim-markdown'
 
 "Plugin 'tpope/vim-surround'
 "Plugin 'scrooloose/nerdtree'
