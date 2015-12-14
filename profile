@@ -5,8 +5,8 @@ alias s='git status'
 alias c='git commit -m'
 alias gl='git log --oneline --graph --decorate --all'
 alias serve='python -m SimpleHTTPServer 8000'
-alias torrents='~/scripts/rsync-torrents.sh'
-alias syncferal='~/scripts/rsync-feral-to-local.sh'
+alias torrentsend='~/scripts/rsync-torrents.sh'
+alias getferal='~/scripts/rsync-feral-to-local.sh'
 
 export CLICOLOR=1
 export TERM=xterm-256color
