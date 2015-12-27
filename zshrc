@@ -12,3 +12,5 @@ fi
 
 # Customize to your needs...
 export DEFAULT_USER=Tim
+
+eval "$(pyenv init -)"
