@@ -18,6 +18,9 @@ TZ='America/Los_Angeles'; export TZ
 #export PROJECT_HOME=$HOME/Devel
 #source /opt/local/bin/virtualenvwrapper.sh
 
+# pyenv shims and autocomplete
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+
 # Setting for the new UTF-8 terminal support in Lion
 export LC_CTYPE=en_US.UTF-8
 #export LC_ALL=en_US.UTF-8
