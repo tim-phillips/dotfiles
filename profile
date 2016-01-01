@@ -7,6 +7,7 @@ alias gl='git log --oneline --graph --decorate --all'
 alias serve='python -m SimpleHTTPServer 8000'
 alias torrentsend='~/scripts/rsync-torrents.sh'
 alias getferal='~/scripts/rsync-feral-to-local.sh'
+alias vim='mvim -v'
 
 export CLICOLOR=1
 export TERM=xterm-256color
@@ -14,9 +15,9 @@ export EDITOR=vim
 TZ='America/Los_Angeles'; export TZ
 
 # virtualenvwrapper
-#export WORKON_HOME=$HOME/.virtualenvs
-#export PROJECT_HOME=$HOME/Devel
-#source /opt/local/bin/virtualenvwrapper.sh
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+source /opt/local/bin/virtualenvwrapper.sh
 
 # Setting for the new UTF-8 terminal support in Lion
 export LC_CTYPE=en_US.UTF-8
