@@ -14,3 +14,7 @@ fi
 export DEFAULT_USER=Tim
 
 eval "$(pyenv init -)"
+
+export WORKON_HOME=$HOME/.envs
+export PROJECT_HOME=$HOME/Devel
+source /usr/local/bin/virtualenvwrapper.sh
