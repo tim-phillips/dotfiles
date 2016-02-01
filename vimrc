@@ -1,6 +1,12 @@
 set nocompatible
 
-set background=light
+let hour = strftime("%H")
+if 7 <= hour && hour < 19
+  set background=light
+else
+  set background=dark
+endif
+set background=dark
 colorscheme solarized
 
 " ================ General Config ====================
