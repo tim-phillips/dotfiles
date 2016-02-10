@@ -1,7 +1,7 @@
 set nocompatible
 
 let hour = strftime("%H")
-if 7 <= hour && hour < 19
+if 7 <= hour && hour < 17
   set background=light
 else
   set background=dark
@@ -46,7 +46,7 @@ Plugin 'digitaltoad/vim-jade'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'marijnh/tern_for_vim'
+"Plugin 'marijnh/tern_for_vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'mattn/emmet-vim'
