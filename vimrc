@@ -1,7 +1,7 @@
 set nocompatible
 
 let hour = strftime("%H")
-if 7 <= hour && hour < 17
+if 7 <= hour && hour < 18
   set background=light
 else
   set background=dark
