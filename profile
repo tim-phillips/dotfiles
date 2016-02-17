@@ -7,7 +7,8 @@ alias gl='git log --oneline --graph --decorate --all'
 alias serve='python -m SimpleHTTPServer 8000'
 alias torrentsend='~/scripts/rsync-torrents.sh'
 alias getferal='~/scripts/rsync-feral-to-local.sh'
-alias vim='mvim -v'
+case $OSTYPE in darwin*) alias vim='mvim -v' ;; esac
+case $OSTYPE in darwin*) echo I am a Mac ;; esac
 
 export CLICOLOR=1
 export TERM=xterm-256color
