@@ -10,7 +10,7 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/.dotfiles_old             # old dotfiles backup directory
-files="gitconfig lftprc profile vimrc zpreztorc zprofile zshrc"    # list of files/folders to symlink in homedir
+files="gitconfig lftprc profile vimrc zpreztorc zprofile zshrc tmux.conf"    # list of files/folders to symlink in homedir
 
 ##########
 
