@@ -11,7 +11,11 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-export DEFAULT_USER=Tim
+if [[ $USER == 'Tim' ]]; then
+  export DEFAULT_USER=Tim
+elif [[ $USER == 'development' ]]; then
+  export DEFAULT_USER=development
+fi
 
 eval "$(pyenv init -)"
 
