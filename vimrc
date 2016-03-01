@@ -1,4 +1,5 @@
 set nocompatible
+set clipboard=unnamed       "Normal vim copy commands y, yy, d, dd copy to Mac clipboard
 
 let hour = strftime("%H")
 if 7 <= hour && hour < 18
