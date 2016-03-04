@@ -22,3 +22,5 @@ eval "$(pyenv init -)"
 export WORKON_HOME=$HOME/.envs
 export PROJECT_HOME=$HOME/Devel
 source /usr/local/bin/virtualenvwrapper.sh
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
