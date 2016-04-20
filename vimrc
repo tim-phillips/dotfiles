@@ -9,6 +9,9 @@ else
 endif
 colorscheme solarized
 
+let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
+"let g:ycm_filetype_blacklist = { 'javascript' : 1 }
+
 " ================ General Config ====================
 
 set number                  "Display line numbers
@@ -47,14 +50,14 @@ Plugin 'digitaltoad/vim-jade'
 Plugin 'bling/vim-airline'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdcommenter'
-"Plugin 'marijnh/tern_for_vim'
+Plugin 'marijnh/tern_for_vim'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'mattn/emmet-vim'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
-"Plugin 'Valloric/YouCompleteMe'
+Plugin 'Valloric/YouCompleteMe'
 "Plugin 'rdnetto/YCM-Generator'
 
 "Plugin 'tpope/vim-surround'

@@ -8,6 +8,8 @@ alias serve='python -m SimpleHTTPServer 8000'
 alias torrentsend='~/scripts/rsync-torrents.sh'
 alias getferal='~/scripts/rsync-feral-to-local.sh'
 case $OSTYPE in darwin*) alias vim='mvim -v'; echo $USER is using a macintosh computer ;; esac
+alias tmuxn='tmux -CC new -s'
+alias tmuxa='tmux -CC a -t'
 
 export CLICOLOR=1
 export TERM=xterm-256color
@@ -23,7 +25,7 @@ TZ='America/Los_Angeles'; export TZ
 export LC_CTYPE=en_US.UTF-8
 #export LC_ALL=en_US.UTF-8
 
-alias cp='cp -i'                          # Preferred 'cp' implementation
+#alias cp='cp -i'                          # Preferred 'cp' implementation
 alias mv='mv -i'                          # Preferred 'mv' implementation
 alias mkdir='mkdir -p'                    # Preferred 'mkdir' implementation
 alias ll='ls -FGlAhp'                     # Preferred 'ls' implementation
