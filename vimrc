@@ -122,7 +122,7 @@ set noerrorbells
 set vb t_vb=                  " no blinking
 
 " Ignore these files when completing
-set wildignore+=*/tmp/*,.git,*.pyc,.DS_Store,*.swp,*.zip
+set wildignore+=*/tmp/*,.git,*.pyc,.DS_Store,*.swp,*.zip,*/venv/*
 set wildignore+=eggs/**
 set wildignore+=*.egg-info/**
 
@@ -187,7 +187,7 @@ endif
 
 " CtrlP
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site|venv)$',
   \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
 \}
 
