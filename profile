@@ -10,16 +10,12 @@ alias getferal='~/scripts/rsync-feral-to-local.sh'
 case $OSTYPE in darwin*) alias vim='mvim -v'; echo $USER is using a macintosh computer ;; esac
 alias tmuxn='tmux -CC new -s'
 alias tmuxa='tmux -CC a -t'
+alias sv='source venv/bin/activate'
 
 export CLICOLOR=1
 export TERM=xterm-256color
 export EDITOR=vim
 TZ='America/Los_Angeles'; export TZ
-
-# virtualenvwrapper
-#export WORKON_HOME=$HOME/.envs
-#export PROJECT_HOME=$HOME/Devel
-#source /usr/local/bin/virtualenvwrapper.sh
 
 # Setting for the new UTF-8 terminal support in Lion
 export LC_CTYPE=en_US.UTF-8

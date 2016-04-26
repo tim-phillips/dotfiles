@@ -1,9 +1,6 @@
 #
 # Executes commands at the start of an interactive session.
 #
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
@@ -19,11 +16,6 @@ fi
 
 # PyEnv
 eval "$(pyenv init -)"
-
-# VirtualEnvWrapper
-export WORKON_HOME=$HOME/.envs
-export PROJECT_HOME=$HOME/Devel
-source /usr/local/bin/virtualenvwrapper.sh
 
 # iTerm2 integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
