@@ -15,7 +15,7 @@ elif [[ $USER == 'development' ]]; then
 fi
 
 # PyEnv
-eval "$(pyenv init -)"
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
 # iTerm2 integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
