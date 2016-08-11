@@ -1,8 +1,9 @@
 set nocompatible
 set clipboard=unnamed       "Normal vim copy commands y, yy, d, dd copy to Mac clipboard
 
+" ================ Daylight ==========================
 let hour = strftime("%H")
-if 6 <= hour && hour < 18
+if 6 <= hour && hour < 20
   set background=light
 else
   set background=dark
@@ -13,7 +14,6 @@ let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
 "let g:ycm_filetype_blacklist = { 'javascript' : 1 }
 
 " ================ General Config ====================
-
 set number                  "Display line numbers
 set backspace=2             "Allow backspacing over autoindent, EOL, and BOL
 set history=1000
@@ -26,7 +26,6 @@ let mapleader=","
 "set showmode               "Show current mode down the bottom
 
 " ================ Indentation ====================
-
 set autoindent              " always set autoindenting on
 set smartindent             " use smart indent if there is no indent file
 set shiftwidth=2            " And an indent level is 4 spaces wide.
@@ -34,13 +33,28 @@ set softtabstop=2           " <BS> over an autoindent deletes all spaces.
 set tabstop=2               " <tab> inserts 4 spaces 
 set expandtab               " Use spaces, not tabs, for autoindent/tab key.
 
-" ================ Plugins ====================
+" ================ ctrlp ====================
+if executable('ag')
+  " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files. Lightning fast, respects .gitignore
+  " and .agignore. Ignores hidden files by default.
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
+else
+  "ctrl+p ignore files in .gitignore
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+endif
 
+" Use the nearest .git directory as the cwd
+let g:ctrlp_working_path_mode = 'r'
+
+" ================ Plugins ====================
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 let g:vundle_default_git_proto='git'
 let g:airline_powerline_fonts = 1
 let g:netrw_liststyle=3
+let g:jsx_ext_required = 0
 set timeoutlen=1000 ttimeoutlen=10
 call vundle#begin()
 
@@ -57,11 +71,13 @@ Plugin 'mattn/emmet-vim'
 Plugin 'chase/vim-ansible-yaml'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
+Plugin 'scrooloose/nerdtree'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 Plugin 'Valloric/YouCompleteMe'
 "Plugin 'rdnetto/YCM-Generator'
 
 "Plugin 'tpope/vim-surround'
-"Plugin 'scrooloose/nerdtree'
 "Plugin 'tpope/vim-repeat'
 "Plugin 'plasticboy/vim-markdown' 
 "Plugin 'scrooloose/syntastic'
@@ -74,7 +90,6 @@ call vundle#end()
 filetype plugin indent on
 
 " ================ Shortcuts ====================
-
 autocmd FileType python nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
 
 nnoremap ; :
@@ -102,6 +117,8 @@ nmap <leader>p :CtrlP<cr>
 nmap <leader>bb :CtrlPBuffer<cr>
 nmap <leader>bm :CtrlPMixed<cr>
 nmap <leader>bs :CtrlPMRU<cr>
+
+map <C-n> :NERDTreeToggle<CR>
 
 " for when we forget to use sudo to open/edit a file
 cmap w!! w !sudo tee % >/dev/null
@@ -168,7 +185,6 @@ set hlsearch                " Highlight searches by default.
 set incsearch               " Incrementally search while typing a /regex
 
 " ================ Persistent Undo ==================
-
 if exists("+undofile")
   if isdirectory($HOME . '/.vim/undo') == 0
     :silent !mkdir -p ~/.vim/undo > /dev/null 2>&1
@@ -185,17 +201,7 @@ if $TERM_PROGRAM =~ "iTerm"
     let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
 endif
 
-" CtrlP
-let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site|venv)$',
-  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
-\}
-
-" Use the nearest .git directory as the cwd
-let g:ctrlp_working_path_mode = 'r'
-
 " ============== Learning Vim ================
-
 " No arrow keys!
 nnoremap <up> <nop>
 nnoremap <down> <nop>
@@ -209,7 +215,6 @@ nnoremap j gj
 nnoremap k gk
 
 " ================ Exras ==================
-
 " Enable list of buffers at top of window and just show filename
 "let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#fnamemod = ':t'
