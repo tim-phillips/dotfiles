@@ -10,7 +10,7 @@ else
 endif
 colorscheme solarized
 
-let g:ycm_path_to_python_interpreter = '/usr/local/bin/python'
+let g:ycm_path_to_python_interpreter = '/usr/local/bin/python2'
 "let g:ycm_filetype_blacklist = { 'javascript' : 1 }
 
 " ================ General Config ====================
@@ -66,29 +66,30 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'marijnh/tern_for_vim'
 Plugin 'kien/ctrlp.vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'chase/vim-ansible-yaml'
 Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'scrooloose/nerdtree'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'Valloric/YouCompleteMe'
-"Plugin 'rdnetto/YCM-Generator'
+Plugin 'tpope/vim-surround'
+"Plugin 'scrooloose/syntastic'
 
 "Plugin 'mattn/emmet-vim'
-"Plugin 'digitaltoad/vim-jade'
-"Plugin 'tpope/vim-surround'
 "Plugin 'tpope/vim-repeat'
-"Plugin 'plasticboy/vim-markdown' 
-"Plugin 'scrooloose/syntastic'
-"Plugin 'altercation/vim-colors-solarized'
-"Plugin 'wincent/Command-T'
-"Plugin 'Shougo/vimproc'
-"Plugin 'Shougo/vimshell'
 
 call vundle#end()
 filetype plugin indent on
+
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_enable_signs = 1
+"let g:syntastic_javascript_checkers = ['eslint']
+"let g:syntastic_javascript_eslint_exe = 'npm run lint --'
+
+"let g:syntastic_javascript_checkers = ['babel-eslint']
 
 " ================ Shortcuts ====================
 autocmd FileType python nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
@@ -160,23 +161,11 @@ set sidescroll=1
 set shiftround              " rounds indent to a multiple of shiftwidth
 set formatoptions=tcroql    " Setting text and comment formatting to auto
 set nowrap                    " Wrap text
-"set textwidth=80            " lines are automatically wrapped after 80 columns
-"set nofoldenable            " turn off folding
-"set colorcolumn=80          " highlight column 80 (where words will wrap)
-"set showmatch               " Briefly jump to a paren once it's balanced
-"set linebreak               " don't wrap textin the middle of a word
-
-""" Reading/Writing
-"set autowriteall            " Don't bother me about changed buffers
-"set noautoread              " Don't automatically re-read changed files.
-"set modeline                " Allow vim options to be embedded in files;
-"set modelines=5             " they must be within the first or last 5 lines.
 
 """ Messages, Info, Status
 set ls=2                    " always show status line
 set report=0                " : commands always print changed line count.
 set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
-set ruler                   " Show some info, even without statuslines.
 set laststatus=2            " Always show statusline, even if only 1 window.
 
 """ Searching and Patterns
@@ -215,31 +204,16 @@ inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
 
-" ================ Exras ==================
+" ================ Extras ==================
 " Enable list of buffers at top of window and just show filename
 "let g:airline#extensions#tabline#enabled = 1
 "let g:airline#extensions#tabline#fnamemod = ':t'
-
-" Paste from clipboard
-"map <leader>p "+p
 
 " Remove trailing whitespace on <leader>S
 "nnoremap <leader>S :%s/\s\+$//<cr>:let @/=''<CR>
 
 " Select the item in the list with enter
 "inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-
-"map <C-space> :bn<CR>
-"map <C-M-space> :bp<CR>
-
-" Preview Markdown files with QuickLook
-"map <Leader>v :write<cr>:sil !/usr/bin/qlmanage -p % > /dev/null &<cr>:redraw!<cr>
-"set guifont=Sauce\ Code\ Powerline:h14)
-
-" OmniComplete - http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
-"set completeopt=longest,menuone
-"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-"inoremap <expr> <C-n> pumvisible() ? '<C-n>' : '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 
 " https://www.jeffknupp.com/blog/2013/12/04/my-development-environment-for-python/
 " https://github.com/jeffknupp/dotfiles/blob/master/.vimrc
