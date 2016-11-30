@@ -1,52 +1,10 @@
-set nocompatible
-set clipboard=unnamed       "Normal vim copy commands y, yy, d, dd copy to Mac clipboard
-
-" ================ Daylight ==========================
-let hour = strftime("%H")
-if 6 <= hour && hour < 20
-  set background=light
-else
-  set background=dark
-endif
-colorscheme solarized
-
-let g:ycm_path_to_python_interpreter = '/usr/local/bin/python2'
-"let g:ycm_filetype_blacklist = { 'javascript' : 1 }
-
 " ================ General Config ====================
-set number                  "Display line numbers
-set backspace=2             "Allow backspacing over autoindent, EOL, and BOL
-set history=1000
-set showcmd                 "Show incomplete normal mode commands as I type.
-set visualbell              "No sounds
-set autoread                "Reload files changed outside vim
-set hidden
-syntax on                   "Syntax highlighing
+syntax on
 let mapleader=","
-"set showmode               "Show current mode down the bottom
-
-" ================ Indentation ====================
-set autoindent              " always set autoindenting on
-set smartindent             " use smart indent if there is no indent file
-set shiftwidth=2            " And an indent level is 4 spaces wide.
-set softtabstop=2           " <BS> over an autoindent deletes all spaces.
-set tabstop=2               " <tab> inserts 4 spaces 
-set expandtab               " Use spaces, not tabs, for autoindent/tab key.
-
-" ================ ctrlp ====================
-if executable('ag')
-  " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-  set grepprg=ag\ --nogroup\ --nocolor
-  " Use ag in CtrlP for listing files. Lightning fast, respects .gitignore
-  " and .agignore. Ignores hidden files by default.
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
-else
-  "ctrl+p ignore files in .gitignore
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-endif
-
-" Use the nearest .git directory as the cwd
-let g:ctrlp_working_path_mode = 'r'
+set nocompatible clipboard=unnamed "y, yy, d, dd copy to Mac clipboard
+set number backspace=2 history=1000 showcmd visualbell autoread hidden
+set autoindent smartindent shiftwidth=2 softtabstop=2 tabstop=2 expandtab
+set timeoutlen=1000 ttimeoutlen=10 splitright splitbelow
 
 " ================ Plugins ====================
 filetype off
@@ -55,32 +13,34 @@ let g:vundle_default_git_proto='git'
 let g:airline_powerline_fonts = 1
 let g:netrw_liststyle=3
 let g:jsx_ext_required = 0
-set timeoutlen=1000 ttimeoutlen=10
-call vundle#begin()
+let g:ycm_path_to_python_interpreter = '/usr/local/bin/python2'
+"let g:ycm_filetype_blacklist = { 'javascript' : 1 }
+let g:vim_markdown_folding_disabled = 1
 
+call vundle#begin()
 Plugin 'gmarik/vundle'
 Plugin 'sjl/gundo.vim'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'marijnh/tern_for_vim'
+Plugin 'ternjs/tern_for_vim'
 Plugin 'kien/ctrlp.vim'
-Plugin 'godlygeek/tabular'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-surround'
+"Plugin 'godlygeek/tabular'
 "Plugin 'scrooloose/syntastic'
-
 "Plugin 'mattn/emmet-vim'
 "Plugin 'tpope/vim-repeat'
-
 call vundle#end()
 filetype plugin indent on
 
+" ================ Syntastic ====================
 "let g:syntastic_always_populate_loc_list = 1
 "let g:syntastic_auto_loc_list = 1
 "let g:syntastic_check_on_open = 1
@@ -101,6 +61,7 @@ inoremap kj <ESC>
 
 " new vertical split and switch to it
 map <leader>w <C-w>v<C-w>l
+map <leader>s <C-w>s<C-w>j
 " move around splits
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -120,15 +81,12 @@ nmap <leader>bb :CtrlPBuffer<cr>
 nmap <leader>bm :CtrlPMixed<cr>
 nmap <leader>bs :CtrlPMRU<cr>
 
-map <C-n> :NERDTreeToggle<CR>
+map <C-n> :NERDTreeTabsToggle<CR>
 
 " for when we forget to use sudo to open/edit a file
 cmap w!! w !sudo tee % >/dev/null
 
-" ==========================================================
-" Basic Settings
-" ==========================================================
-
+" ================ Basic Settings ====================
 filetype on                   " try to detect filetypes
 set title                     " show title in console title bar
 set wildmenu                  " menu completion in command mode on <Tab>
@@ -145,11 +103,7 @@ set wildignore+=*/tmp/*,.git,*.pyc,.DS_Store,*.swp,*.zip,*/venv/*
 set wildignore+=eggs/**
 set wildignore+=*.egg-info/**
 
-"autocmd FileType python setlocal shiftwidth=2 tabstop=2 sts=2
-autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 sts=2
-autocmd FileType coffee setlocal shiftwidth=2 tabstop=2 sts=2
-autocmd FileType html setlocal shiftwidth=2 tabstop=2 sts=2
-autocmd FileType jade setlocal shiftwidth=2 tabstop=2 sts=2
+"autocmd FileType python setlocal shiftwidth=4 tabstop=4 sts=4
 
 """ Moving Around/Editing
 set ruler                   " show the cursor position all the time
@@ -203,6 +157,30 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
+
+" ================ ctrlp ====================
+if executable('ag')
+  " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+  set grepprg=ag\ --nogroup\ --nocolor
+  " Use ag in CtrlP for listing files. Lightning fast, respects .gitignore
+  " and .agignore. Ignores hidden files by default.
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -f -g ""'
+else
+  "ctrl+p ignore files in .gitignore
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+endif
+
+" Use the nearest .git directory as the cwd
+let g:ctrlp_working_path_mode = 'r'
+
+" ================ Daylight ==========================
+let hour = strftime("%H")
+if 6 <= hour && hour < 19
+  set background=light
+else
+  set background=dark
+endif
+colorscheme solarized
 
 " ================ Extras ==================
 " Enable list of buffers at top of window and just show filename
