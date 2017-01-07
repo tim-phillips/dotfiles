@@ -11,6 +11,8 @@ case $OSTYPE in darwin*) alias vim='mvim -v'; echo $USER is using a macintosh co
 alias tmuxn='tmux -CC new -s'
 alias tmuxa='tmux -CC a -t'
 alias sv='source venv/bin/activate'
+alias ip='ipconfig getifaddr en0'
+alias whatismyip='ipconfig getifaddr en0'
 
 export CLICOLOR=1
 export TERM=xterm-256color

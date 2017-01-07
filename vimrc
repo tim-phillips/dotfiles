@@ -14,7 +14,6 @@ let g:airline_powerline_fonts = 1
 let g:netrw_liststyle=3
 let g:jsx_ext_required = 0
 let g:ycm_path_to_python_interpreter = '/usr/local/bin/python2'
-"let g:ycm_filetype_blacklist = { 'javascript' : 1 }
 let g:vim_markdown_folding_disabled = 1
 
 call vundle#begin()
@@ -33,58 +32,47 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/syntastic'
+Plugin 'Townk/vim-autoclose'
+Plugin 'inkarkat/closetag.vim'
+Plugin 'tmhedberg/matchit'
 "Plugin 'godlygeek/tabular'
-"Plugin 'scrooloose/syntastic'
 "Plugin 'mattn/emmet-vim'
 "Plugin 'tpope/vim-repeat'
 call vundle#end()
 filetype plugin indent on
 
-" ================ Syntastic ====================
-"let g:syntastic_always_populate_loc_list = 1
-"let g:syntastic_auto_loc_list = 1
-"let g:syntastic_check_on_open = 1
-"let g:syntastic_check_on_wq = 0
-"let g:syntastic_enable_signs = 1
-"let g:syntastic_javascript_checkers = ['eslint']
-"let g:syntastic_javascript_eslint_exe = 'npm run lint --'
-
-"let g:syntastic_javascript_checkers = ['babel-eslint']
+let g:syntastic_javascript_checkers = ['standard']
+"autocmd bufwritepost *.js silent !standard --fix %
+"set autoread
 
 " ================ Shortcuts ====================
-autocmd FileType python nnoremap <buffer> <F9> :exec '!python' shellescape(@%, 1)<cr>
-
 nnoremap ; :
 inoremap jj <ESC>
 inoremap jk <ESC>
 inoremap kj <ESC>
-
-" new vertical split and switch to it
-map <leader>w <C-w>v<C-w>l
-map <leader>s <C-w>s<C-w>j
+" new split and switch to it
+nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <leader>s <C-w>s<C-w>j
 " move around splits
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
-" insert mode too
-imap <C-W> <C-O><C-W>
-
-nnoremap <leader>q :q<cr>
-nnoremap <leader>g :GundoToggle<CR>
-nnoremap <leader><space> :nohlsearch<cr>
-nnoremap <leader>P Oimport pdb; pdb.set_trace()
-map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
-
-nmap <leader>p :CtrlP<cr>
-nmap <leader>bb :CtrlPBuffer<cr>
-nmap <leader>bm :CtrlPMixed<cr>
-nmap <leader>bs :CtrlPMRU<cr>
-
-map <C-n> :NERDTreeTabsToggle<CR>
-
+" plugins & vim
+nnoremap <leader>q :q<CR>
+nnoremap <leader>p :CtrlP<CR>
+nnoremap <C-g> :GundoToggle<CR>
+nnoremap <C-n> :NERDTreeTabsToggle<CR>
+nnoremap <leader><space> :nohlsearch<CR>
+nnoremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+" resize current split
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 " for when we forget to use sudo to open/edit a file
 cmap w!! w !sudo tee % >/dev/null
+" Remove trailing whitespace on <leader>S
+"nnoremap <leader>S :%s/\s\+$//<CR>:let @/=''<CR>
 
 " ================ Basic Settings ====================
 filetype on                   " try to detect filetypes
@@ -107,14 +95,14 @@ set wildignore+=*.egg-info/**
 
 """ Moving Around/Editing
 set ruler                   " show the cursor position all the time
-set nostartofline           " Avoid moving cursor to BOL when jumping around
+"set nostartofline           " Avoid moving cursor to BOL when jumping around
 set virtualedit=block       " Let cursor move past the last char in <C-v> mode
 set scrolloff=6             " Keep 6 context lines above and below the cursor
 set sidescrolloff=15
 set sidescroll=1
 set shiftround              " rounds indent to a multiple of shiftwidth
 set formatoptions=tcroql    " Setting text and comment formatting to auto
-set nowrap                    " Wrap text
+set nowrap                  " Wrap text
 
 """ Messages, Info, Status
 set ls=2                    " always show status line
@@ -141,22 +129,9 @@ hi DiffText gui=underline guibg=red guifg=black
 
 " iTerm cursor shape
 if $TERM_PROGRAM =~ "iTerm"
-    let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
-    let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
 endif
-
-" ============== Learning Vim ================
-" No arrow keys!
-nnoremap <up> <nop>
-nnoremap <down> <nop>
-nnoremap <left> <nop>
-nnoremap <right> <nop>
-inoremap <up> <nop>
-inoremap <down> <nop>
-inoremap <left> <nop>
-inoremap <right> <nop>
-nnoremap j gj
-nnoremap k gk
 
 " ================ ctrlp ====================
 if executable('ag')
@@ -175,23 +150,13 @@ let g:ctrlp_working_path_mode = 'r'
 
 " ================ Daylight ==========================
 let hour = strftime("%H")
-if 6 <= hour && hour < 19
+if 6 <= hour && hour < 18
   set background=light
 else
   set background=dark
 endif
+"set background=dark
 colorscheme solarized
-
-" ================ Extras ==================
-" Enable list of buffers at top of window and just show filename
-"let g:airline#extensions#tabline#enabled = 1
-"let g:airline#extensions#tabline#fnamemod = ':t'
-
-" Remove trailing whitespace on <leader>S
-"nnoremap <leader>S :%s/\s\+$//<cr>:let @/=''<CR>
-
-" Select the item in the list with enter
-"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " https://www.jeffknupp.com/blog/2013/12/04/my-development-environment-for-python/
 " https://github.com/jeffknupp/dotfiles/blob/master/.vimrc
