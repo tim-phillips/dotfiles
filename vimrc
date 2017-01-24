@@ -1,47 +1,103 @@
+" >^.^<
+
 " ================ General Config ====================
-syntax on
+filetype on
 let mapleader=","
-set nocompatible clipboard=unnamed "y, yy, d, dd copy to Mac clipboard
-set number backspace=2 history=1000 showcmd visualbell autoread hidden
-set autoindent smartindent shiftwidth=2 softtabstop=2 tabstop=2 expandtab
+set clipboard=unnamed "y, yy, d, dd copy to Mac clipboard
+set title ruler number relativenumber showcmd visualbell noerrorbells
+set hidden smartindent shiftwidth=2 softtabstop=2 tabstop=2 expandtab
 set timeoutlen=1000 ttimeoutlen=10 splitright splitbelow
+set nowrap mouse=c ls=2 report=0 shortmess+=a laststatus=2
+set ignorecase smartcase hlsearch incsearch wildmenu wildmode=full
+set virtualedit=block scrolloff=6 sidescrolloff=15 sidescroll=1 shiftround
+set formatoptions=tcroql "Setting text and comment formatting to auto
+set vb t_vb= "no blinking
+set backup backupdir=~/.vim/_backups directory=~/.vim/_swaps
+set backupskip=/tmp/*,/private/tmp/* " Don't buffer crontab
+set wildignore+=*/tmp/*,.git,*.pyc,.DS_Store,*.swp,*.zip,*/venv/*,*/node_modules/*
+"set nostartofline "Avoid moving cursor to BOL when jumping around
+"set termguicolors
+"autocmd FileType python setlocal shiftwidth=4 tabstop=4 sts=4
+
+if !has('nvim')
+  set nocompatible backspace=2 history=10000 autoread autoindent
+endif
 
 " ================ Plugins ====================
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-let g:vundle_default_git_proto='git'
-let g:airline_powerline_fonts = 1
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/bundle')
+Plug 'ctrlpvim/ctrlp.vim',        { 'on': ['CtrlP', 'CtrlPBuffer', 'CtrlPMRU', 'CtrlPMixed'] }
+Plug 'sjl/gundo.vim',             { 'on': 'GundoToggle' }
+Plug 'scrooloose/nerdtree',       { 'on': 'NERDTreeTabsToggle' }
+Plug 'jistr/vim-nerdtree-tabs',   { 'on': ['NERDTreeToggle', 'NERDTreeFind', 'NERDTreeTabsToggle', 'NERDTreeTabsFind'] }
+Plug 'tpope/vim-surround'
+Plug 'pangloss/vim-javascript',   { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'mxw/vim-jsx',               { 'for': ['jsx', 'javascript.jsx'] }
+Plug 'plasticboy/vim-markdown',   { 'for': 'markdown' }
+Plug 'scrooloose/syntastic',      { 'for': ['javascript', 'javascript.jsx'] }
+Plug 'inkarkat/closetag.vim',     { 'for': ['html', 'css', 'javascript.jsx'] } " <c-_>
+"Plug 'mattn/emmet-vim',           { 'for': ['html', 'css', 'javascript.jsx'] } " <c-y>,
+Plug 'tmhedberg/matchit'          " % finds next thing
+Plug 'Townk/vim-autoclose'        " '(' produces ')'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'Valloric/YouCompleteMe',    { 'do': './install.py --tern-completer' }
+"Plug 'Shougo/deoplete.nvim',      { 'do': ':UpdateRemotePlugins' }
+Plug 'ervandew/supertab'
+Plug 'ternjs/tern_for_vim',       { 'do': 'yarn', 'for': ['javascript', 'javascript.jsx'] }
+"Plug 'carlitux/deoplete-ternjs',  { 'do': 'yarn global add tern', 'for': ['javascript', 'javascript.jsx'] }
+Plug 'othree/jspc.vim',           { 'for': ['javascript', 'javascript.jsx'] }
+"Plug 'tpope/vim-fugitive'
+"Plug 'scrooloose/nerdcommenter'
+"Plug 'godlygeek/tabular'
+"Plug 'tpope/vim-repeat'
+
+"if has('nvim')
+"elseif has('lua')
+"  Plug 'Shougo/neocomplete.vim', { 'do': ':NeoCompleteEnable' }
+"else
+"  Plug 'Valloric/YouCompleteMe'
+"endif
+
+call plug#end()
+
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+
+"let g:deoplete#enable_at_startup = 1
+"let g:deoplete#omni#functions = {}
+"let g:deoplete#omni#functions.javascript = ['tern#Complete', 'jspc#omni']
+"set completeopt=longest,menuone,preview
+"let g:deoplete#sources = {}
+"let g:deoplete#sources['javascript.jsx'] = ['file', 'ultisnips', 'ternjs']
+"let g:tern#command = ['tern']
+"let g:tern#arguments = ['--persistent']
+"autocmd FileType javascript let g:SuperTabDefaultCompletionType = '<c-x><c-o>'
+"let g:UltiSnipsExpandTrigger='<C-j>'
+"inoremap <expr><TAB> pumvisible() ? '\<C-n>' : '\<TAB>'
+
+let g:airline_powerline_fonts=1
 let g:netrw_liststyle=3
-let g:jsx_ext_required = 0
-let g:ycm_path_to_python_interpreter = '/usr/local/bin/python2'
-let g:vim_markdown_folding_disabled = 1
+let g:jsx_ext_required=0
+let g:vim_markdown_folding_disabled=1
+"let g:user_emmet_settings = {'javascript' : {'extends' : 'jsx'}}
+let g:ycm_path_to_python_interpreter='/usr/local/bin/python2'
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif "closes preview split when leaving insert mode
 
-call vundle#begin()
-Plugin 'gmarik/vundle'
-Plugin 'sjl/gundo.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'tpope/vim-fugitive'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'ternjs/tern_for_vim'
-Plugin 'kien/ctrlp.vim'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'scrooloose/nerdtree'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'tpope/vim-surround'
-Plugin 'scrooloose/syntastic'
-Plugin 'Townk/vim-autoclose'
-Plugin 'inkarkat/closetag.vim'
-Plugin 'tmhedberg/matchit'
-"Plugin 'godlygeek/tabular'
-"Plugin 'mattn/emmet-vim'
-"Plugin 'tpope/vim-repeat'
-call vundle#end()
-filetype plugin indent on
-
+" syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['standard']
 "autocmd bufwritepost *.js silent !standard --fix %
 "set autoread
@@ -74,48 +130,6 @@ cmap w!! w !sudo tee % >/dev/null
 " Remove trailing whitespace on <leader>S
 "nnoremap <leader>S :%s/\s\+$//<CR>:let @/=''<CR>
 
-" ================ Basic Settings ====================
-filetype on                   " try to detect filetypes
-set title                     " show title in console title bar
-set wildmenu                  " menu completion in command mode on <Tab>
-set wildmode=full             " <Tab> cycles between all matching choices.
-set backup                    " keep a backup file
-set backupdir=~/.vim/_backups " store backups here
-set directory=~/.vim/_swaps   " store swap files here
-set backupskip=/tmp/*,/private/tmp/* " Don't buffer crontab
-set noerrorbells
-set vb t_vb=                  " no blinking
-
-" Ignore these files when completing
-set wildignore+=*/tmp/*,.git,*.pyc,.DS_Store,*.swp,*.zip,*/venv/*
-set wildignore+=eggs/**
-set wildignore+=*.egg-info/**
-
-"autocmd FileType python setlocal shiftwidth=4 tabstop=4 sts=4
-
-""" Moving Around/Editing
-set ruler                   " show the cursor position all the time
-"set nostartofline           " Avoid moving cursor to BOL when jumping around
-set virtualedit=block       " Let cursor move past the last char in <C-v> mode
-set scrolloff=6             " Keep 6 context lines above and below the cursor
-set sidescrolloff=15
-set sidescroll=1
-set shiftround              " rounds indent to a multiple of shiftwidth
-set formatoptions=tcroql    " Setting text and comment formatting to auto
-set nowrap                  " Wrap text
-
-""" Messages, Info, Status
-set ls=2                    " always show status line
-set report=0                " : commands always print changed line count.
-set shortmess+=a            " Use [+]/[RO]/[w] for modified/readonly/written.
-set laststatus=2            " Always show statusline, even if only 1 window.
-
-""" Searching and Patterns
-set ignorecase              " Default to using case insensitive searches,
-set smartcase               " unless uppercase letters are used in the regex.
-set hlsearch                " Highlight searches by default.
-set incsearch               " Incrementally search while typing a /regex
-
 " ================ Persistent Undo ==================
 if exists("+undofile")
   if isdirectory($HOME . '/.vim/undo') == 0
@@ -126,12 +140,6 @@ if exists("+undofile")
 endif
 
 hi DiffText gui=underline guibg=red guifg=black
-
-" iTerm cursor shape
-if $TERM_PROGRAM =~ "iTerm"
-  let &t_SI = "\<Esc>]50;CursorShape=1\x7" " Vertical bar in insert mode
-  let &t_EI = "\<Esc>]50;CursorShape=0\x7" " Block in normal mode
-endif
 
 " ================ ctrlp ====================
 if executable('ag')
