@@ -7,16 +7,17 @@ alias gl='git log --oneline --graph --decorate --all'
 alias serve='python -m SimpleHTTPServer 8000'
 alias torrentsend='~/scripts/rsync-torrents.sh'
 alias getferal='~/scripts/rsync-feral-to-local.sh'
-case $OSTYPE in darwin*) alias vim='mvim -v'; echo $USER is using a macintosh computer ;; esac
+case $OSTYPE in darwin*) alias vim='nvim'; echo ">^.^<" ;; esac
 alias tmuxn='tmux -CC new -s'
 alias tmuxa='tmux -CC a -t'
 alias sv='source venv/bin/activate'
 alias ip='ipconfig getifaddr en0'
 alias whatismyip='ipconfig getifaddr en0'
+alias tree='tree -I "*node_modules*"'
 
 export CLICOLOR=1
 export TERM=xterm-256color
-export EDITOR=vim
+export EDITOR=nvim
 TZ='America/Los_Angeles'; export TZ
 
 # Setting for the new UTF-8 terminal support in Lion
