@@ -1,6 +1,8 @@
 # aliases
+alias python='python3'
 alias ts_sync='rsync -av /Users/Tim/Audio/ts/ /Volumes/wudduwuddup/audio/ts'
 alias s='git status'
+alias t='git tree'
 #alias diff='git diff' #interferes w unix diff tool
 alias c='git commit -m'
 alias gl='git log --oneline --graph --decorate --all'
@@ -14,6 +16,13 @@ alias sv='source venv/bin/activate'
 alias ip='ipconfig getifaddr en0'
 alias whatismyip='ipconfig getifaddr en0'
 alias tree='tree -I "*node_modules*"'
+alias nowpurge="now rm \$(now-no-alias | json -a uid)"
+
+alias cdinventory='cd ~/apps/inventory'
+alias cdkchung='cd ~/apps/kchung'
+alias cdschedule='cd ~/apps/kchung/schedule'
+alias cdnewsbody='cd ~/apps/kchung/newsbody/site'
+alias cdfooder='cd ~/apps/fooder/phase-1'
 
 export CLICOLOR=1
 export TERM=xterm-256color
@@ -23,6 +32,12 @@ TZ='America/Los_Angeles'; export TZ
 # Setting for the new UTF-8 terminal support in Lion
 export LC_CTYPE=en_US.UTF-8
 #export LC_ALL=en_US.UTF-8
+
+# VirtualEnvWrapper for Python
+export WORKON_HOME=~/Envs
+export VIRTUALENVWRAPPER_PYTHON=python
+export VIRTUALENV_PYTHON=python3
+source /usr/local/bin/virtualenvwrapper.sh
 
 #alias cp='cp -i'                          # Preferred 'cp' implementation
 alias mv='mv -i'                          # Preferred 'mv' implementation
@@ -49,3 +64,6 @@ ql () { qlmanage -p "$*" >& /dev/null; }  # ql: Opens any file in MacOS Quickloo
 alias DT='tee ~/Desktop/terminalOut.txt'  # DT: Pipe content to file on MacOS Desktop
 
 # http://natelandau.com/my-mac-osx-bash_profile/
+
+# added by Anaconda3 4.4.0 installer
+export PATH="/Users/development/anaconda/bin:$PATH"
