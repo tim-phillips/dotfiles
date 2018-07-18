@@ -1,3 +1,5 @@
+case $OSTYPE in darwin*) alias vim='nvim'; echo ">^.^<" ;; esac
+
 alias cl='clear'
 alias mv='mv -i'
 alias ll='ls -FGlAhp'
