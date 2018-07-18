@@ -7,11 +7,14 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# set default user
+# general
+DISABLE_AUTO_TITLE="true"
+
+# default user
 if [[ $USER == 'Tim' ]]; then
-  export DEFAULT_USER=Tim
+  DEFAULT_USER=Tim
 elif [[ $USER == 'development' ]]; then
-  export DEFAULT_USER=development
+  DEFAULT_USER=development
 fi
 
 eval $(thefuck --alias)
@@ -21,9 +24,12 @@ test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell
 #export NVM_DIR="$HOME/.nvm"
 #[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 
-export PATH="$(yarn global bin):$PATH"
+# options
+setopt ignoreeof
 
-# Android SDK
-export ANDROID_HOME=${HOME}/Library/Android/sdk
-export PATH=${PATH}:${ANDROID_HOME}/tools
-export PATH=${PATH}:${ANDROID_HOME}/platform-tools
+# tabtab source for serverless package
+# uninstall by removing these lines or running `tabtab uninstall serverless`
+[[ -f /Users/development/.config/yarn/global/node_modules/tabtab/.completions/serverless.zsh ]] && . /Users/development/.config/yarn/global/node_modules/tabtab/.completions/serverless.zsh
+# tabtab source for sls package
+# uninstall by removing these lines or running `tabtab uninstall sls`
+[[ -f /Users/development/.config/yarn/global/node_modules/tabtab/.completions/sls.zsh ]] && . /Users/development/.config/yarn/global/node_modules/tabtab/.completions/sls.zsh

@@ -1,11 +1,34 @@
 #
 # Executes commands at login pre-zshrc.
 #
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
 
 emulate sh -c '. ~/.profile'
+
+#
+# Paths
+#
+
+# Ensure path arrays do not contain duplicates.
+typeset -gU cdpath fpath mailpath path
+
+# Set the the list of directories that cd searches.
+# cdpath=(
+#   $cdpath
+# )
+
+# Set the list of directories (PATH) that Zsh searches for programs.
+path=(
+  ~/.config/yarn/global/node_modules/.bin
+  /usr/local/{bin,sbin}
+  /usr/{bin,sbin}
+  /{bin,sbin}
+  ~/Library/Python/2.7/bin
+  ~/scripts
+  ~/.cargo/bin
+  # ~/anaconda/bin
+  # ~/Library/Android/sdk/{tools,platform-tools}
+  $path
+)
 
 #
 # Browser
@@ -32,27 +55,6 @@ if [[ -z "$LANG" ]]; then
 fi
 
 #
-# Paths
-#
-
-# Ensure path arrays do not contain duplicates.
-typeset -gU cdpath fpath mailpath path
-
-# Set the the list of directories that cd searches.
-# cdpath=(
-#   $cdpath
-# )
-
-# Set the list of directories that Zsh searches for programs.
-path=(
-  /usr/local/{bin,sbin}
-  /usr/{bin,sbin}
-  /{bin,sbin}
-  ~/scripts
-  $path
-)
-
-#
 # Less
 #
 
@@ -77,3 +79,5 @@ if [[ ! -d "$TMPDIR" ]]; then
 fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
+
+export PATH="$HOME/.cargo/bin:$PATH"
