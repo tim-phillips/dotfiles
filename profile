@@ -10,10 +10,13 @@ alias python='python3'
 alias whatismyip='ipconfig getifaddr en0'
 alias ip='ipconfig getifaddr en0'
 alias f='open -a Finder ./'
+alias shebang='echo "#!/usr/bin/env bash"'
+# alias ag='ag -U' # Ignore VCS ignore files (.gitignore, .hgignore), but still use .ignore.
 
 alias s='git status'
 alias gs='git status'
 alias gd="git diff"
+alias gds="git diff --staged"
 alias b="git branch"
 alias gb="git branch"
 alias gt='git tree'
