@@ -29,6 +29,8 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
+  'syntax-highlighting' \
+  'autosuggestions' \
   'prompt'
 
 #
@@ -79,7 +81,7 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 # Prompt
 #
 
-zstyle ':prezto:module:prompt' theme 'agnoster'
+zstyle ':prezto:module:prompt' theme 'pure'
 
 #
 # Screen
@@ -104,6 +106,7 @@ zstyle ':prezto:module:prompt' theme 'agnoster'
 
 # Set syntax highlighters.
 # By default, only the main highlighter is enabled.
+zstyle ':prezto:module:syntax-highlighting' color 'yes'
 # zstyle ':prezto:module:syntax-highlighting' highlighters \
 #   'main' \
 #   'brackets' \
