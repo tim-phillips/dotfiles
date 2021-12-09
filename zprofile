@@ -22,11 +22,6 @@ path=(
   /usr/local/{bin,sbin}
   /usr/{bin,sbin}
   /{bin,sbin}
-  ~/Library/Python/2.7/bin
-  ~/scripts
-  ~/.cargo/bin
-  # ~/anaconda/bin
-  # ~/Library/Android/sdk/{tools,platform-tools}
   $path
 )
 

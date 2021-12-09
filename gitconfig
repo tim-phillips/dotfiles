@@ -5,6 +5,7 @@
     ci = commit
     tree = log --graph --decorate --pretty=oneline --abbrev-commit
     last = log -1 HEAD
+    find = log --name-status --oneline -G
 [user]
     name = Tim Phillips
     email = tim.p.phillips@gmail.com
@@ -13,3 +14,7 @@
     smudge = git-media-smudge %f
 [push]
     default = simple
+[pull]
+	ff = only
+[init]
+	defaultBranch = main

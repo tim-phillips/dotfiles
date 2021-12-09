@@ -7,25 +7,34 @@ alias tree='tree -I "*node_modules*"'
 alias path='echo -e ${PATH//:/\\n}'
 alias mkdir='mkdir -p'
 alias python='python3'
+alias sed='gsed'
 alias whatismyip='ipconfig getifaddr en0'
 alias ip='ipconfig getifaddr en0'
 alias f='open -a Finder ./'
 alias shebang='echo "#!/usr/bin/env bash"'
-# alias ag='ag -U' # Ignore VCS ignore files (.gitignore, .hgignore), but still use .ignore.
+alias nl='npm list --depth 0'
+alias nlg='nl -g'
 
 alias s='git status'
 alias gs='git status'
-alias gd="git diff"
-alias gds="git diff --staged"
-alias b="git branch"
-alias gb="git branch"
+alias gd='git diff'
+alias gds='git diff --staged'
+alias b='git branch'
+alias gb='git branch'
 alias gt='git tree'
-alias ga="git add"
-alias gc='git commit -m'
-alias gp="git pull"
+alias ga='git add'
+alias gc='git checkout'
+alias gco='git checkout'
+alias gcd='git checkout develop'
+alias gcm='git commit -m'
+alias gp='git pull'
 alias gl='git log --oneline --graph --decorate --all'
-
-alias ts_sync='rsync -av /Users/Tim/Audio/ts/ /Volumes/wudduwuddup/audio/ts'
+alias gr='git for-each-ref --format="%(refname:short)"' # "refs/heads/feature/*"
+alias grh='git for-each-ref --format="%(refname:short)" refs/heads/'
+alias grc='git for-each-ref --sort=committerdate refs/heads/ --format="%(committerdate:short) %(refname:short)"'
+alias gcp='git cherry-pick'
+alias linecount_js='git ls-files | grep "\.js" | xargs wc -l'
+alias linecount_ts='git ls-files | grep "\.ts" | xargs wc -l'
 
 export CLICOLOR=1
 export TERM=xterm-256color
