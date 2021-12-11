@@ -1,0 +1,55 @@
+let mapleader=","
+set clipboard+=unnamedplus " y, yy, d, dd copy to Mac clipboard
+set number relativenumber
+set visualbell
+set timeoutlen=1000
+set ignorecase smartcase
+set hlsearch incsearch
+set scrolloff=6 sidescrolloff=15 sidescroll=1
+set history=100000
+
+nnoremap ; :
+nnoremap : ;
+inoremap jj <Esc>
+inoremap jk <Esc>
+inoremap kj <Esc>
+nnoremap <leader>q :q<CR>
+nnoremap <leader><space> :nohlsearch<CR>
+
+" new split and switch to it
+nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <leader>s <C-w>s<C-w>j
+
+" move around splits
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" idea specific
+vnoremap gc :action CommentByLineComment<CR>
+nnoremap gcc :action CommentByLineComment<CR>
+nnoremap gd :action GotoDeclaration<CR>
+nnoremap gi :action GotoImplementation<CR>
+nnoremap ga :action GotoAction<CR>
+nnoremap gc :action GotoClass<CR>
+nnoremap gs :action GotoSuperMethod<CR>
+nnoremap gt :action GotoTest<CR>
+
+nnoremap <leader>R :action Run<cr>
+nnoremap <leader>D :action Debug<cr>
+
+" search
+"nnoremap / :action Find<cr>
+"nnoremap g/ /
+
+"nmap <C-r> :action RenameElement<CR>
+"nnoremap <leader>\ :action SplitVertically<CR>
+"nnoremap <leader>- :action SplitHorizontally<CR>
+"nnoremap <leader><leader>\ :action Macro.GoToNextSplitter<CR>
+"nmap <leader>r :action ReformatCode<CR>
+"nnoremap WW :action CloseContent<CR>
+"nmap <leader><leader><leader> :action FindInPath<CR>
+"nnoremap <leader>u :action FindUsages<cr>
+"nnoremap <leader>k :action HighlightUsagesInFile<cr>
+"nnoremap <leader>c :action CheckStyleCurrentFileAction<cr>
