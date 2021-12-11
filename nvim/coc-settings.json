@@ -1,0 +1,14 @@
+{
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "json",
+    "graphql",
+    "css",
+    "markdown"
+  ],
+  "tsserver.enableJavascript": false,
+  "tailwindCSS.headwind.runOnSave": false
+}
