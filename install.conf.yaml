@@ -1,0 +1,25 @@
+- defaults:
+    create:
+      mode: 0755
+
+- clean:
+    ~/:
+    ~/.config:
+        recursive: true
+
+- link:
+    ~/.gitconfig:
+    ~/.ideavimrc:
+    ~/.profile:
+    ~/.tmux.conf:
+    ~/.vimrc:
+    ~/.zpreztorc:
+    ~/.zprofile:
+    ~/.zshrc:
+    ~/.config/nvim:
+      create: true
+
+- create: ['~/.vim', '~/.vim/_swaps', '~/.vim/_backups']
+
+# - shell:
+#   - [git submodule update --init --recursive, Installing submodules]
