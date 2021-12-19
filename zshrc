@@ -1,7 +1,3 @@
-# Pure prompt
-autoload -U promptinit; promptinit
-prompt pure
-
 # Source
 test -e "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" && source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
