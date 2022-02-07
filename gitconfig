@@ -8,7 +8,7 @@
     find = log --name-status --oneline -G
 [user]
     name = Tim Phillips
-    email = tim.p.phillips@gmail.com
+    email = timphillips@hey.com
 [filter "media"]
     clean = git-media-clean %f
     smudge = git-media-smudge %f
