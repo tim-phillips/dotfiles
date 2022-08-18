@@ -82,17 +82,17 @@ call plug#end()
 
 " CoC
 let g:coc_global_extensions = [
-  'coc-css',
-  'coc-eslint',
-  'coc-flow',
-  'coc-format-json',
-  'coc-html',
-  'coc-json',
-  'coc-prettier',
-  'coc-prisma'
-  'coc-tailwindcss',
-  'coc-tsserver',
-]
+  \'coc-css',
+  \'coc-eslint',
+  \'coc-flow',
+  \'coc-format-json',
+  \'coc-html',
+  \'coc-json',
+  \'coc-prettier',
+  \'coc-prisma',
+  \'coc-tailwindcss',
+  \'coc-tsserver',
+\]
 " Use tab
 inoremap <silent><expr> <TAB>
   \ pumvisible() ? "\<C-n>" :
