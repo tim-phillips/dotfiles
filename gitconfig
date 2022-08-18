@@ -15,6 +15,6 @@
 [push]
     default = simple
 [pull]
-	ff = only
+    ff = only
 [init]
-	defaultBranch = main
+    defaultBranch = main

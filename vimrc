@@ -36,7 +36,7 @@ endif
 call plug#begin('~/.vim/bundle')
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-Plug 'sjl/gundo.vim',                   { 'on': 'GundoToggle' }
+Plug 'mbbill/undotree',
 Plug 'myusuf3/numbers.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdtree',             { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
@@ -61,9 +61,11 @@ Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'jparise/vim-graphql'
 Plug 'tpope/vim-eunuch'
+Plug 'blueyed/vim-diminactive'
+Plug 'pechorin/any-jump.vim'
+Plug 'tpope/vim-repeat'
 " Plug 'honza/vim-snippets'
 " Plug 'SirVer/ultisnips'
-" Plug 'tpope/vim-repeat'
 " Plug 'othree/yajs.vim',                 { 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'othree/es.next.syntax.vim',       { 'for': ['javascript', 'javascript.jsx'] }
 " Plug 'kien/rainbow_parentheses.vim'
@@ -79,7 +81,18 @@ call plug#end()
 " let g:UltiSnipsJumpBackwardTrigger='<C-S-p>'
 
 " CoC
-let g:coc_global_extensions = ['coc-tsserver']
+let g:coc_global_extensions = [
+  'coc-css',
+  'coc-eslint',
+  'coc-flow',
+  'coc-format-json',
+  'coc-html',
+  'coc-json',
+  'coc-prettier',
+  'coc-prisma'
+  'coc-tailwindcss',
+  'coc-tsserver',
+]
 " Use tab
 inoremap <silent><expr> <TAB>
   \ pumvisible() ? "\<C-n>" :
@@ -126,6 +139,7 @@ let delimitMate_expand_cr = 1
 let delimitMate_expand_space = 1
 let g:netrw_liststyle=3
 let g:jsx_ext_required=0
+let g:undotree_SetFocusWhenToggle = 1
 let g:vim_markdown_folding_disabled=1
 let g:user_emmet_settings = {'javascript' : {'extends' : 'jsx'}}
 let g:python_host_prog = '/usr/local/bin/python2'
@@ -183,7 +197,7 @@ nnoremap <leader>p :Files<CR>
 nnoremap <C-p> :GFiles<CR>
 nnoremap <leader>r :Rg<CR>
 nnoremap <leader>a :Ag<CR>
-nnoremap <leader>g :GundoToggle<CR>
+nnoremap <leader>g :UndotreeToggle<CR>
 nnoremap <leader>t :NERDTreeFind<CR>
 nnoremap <leader><space> :nohlsearch<CR>
 nnoremap <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
