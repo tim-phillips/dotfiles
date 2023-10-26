@@ -64,6 +64,8 @@ Plug 'tpope/vim-eunuch'
 Plug 'blueyed/vim-diminactive'
 Plug 'pechorin/any-jump.vim'
 Plug 'tpope/vim-repeat'
+Plug 'easymotion/vim-easymotion'
+Plug 'pixelastic/vim-undodir-tree'
 " Plug 'honza/vim-snippets'
 " Plug 'SirVer/ultisnips'
 " Plug 'othree/yajs.vim',                 { 'for': ['javascript', 'javascript.jsx'] }
