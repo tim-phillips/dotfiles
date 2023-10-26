@@ -66,3 +66,5 @@ trash () { command mv "$@" ~/.Trash ; }   # trash: Moves a file to the MacOS tra
 ql () { qlmanage -p "$*" >& /dev/null; }  # ql: Opens any file in MacOS Quicklook Preview
 
 # http://natelandau.com/my-mac-osx-bash_profile/
+
+export PIPENV_VENV_IN_PROJECT=1
