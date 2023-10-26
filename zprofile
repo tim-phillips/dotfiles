@@ -19,6 +19,7 @@ typeset -gU cdpath fpath mailpath path
 # Set the list of directories (PATH) that Zsh searches for programs.
 path=(
   ~/.config/yarn/global/node_modules/.bin
+  ~/.local/bin
   /usr/local/{bin,sbin}
   /usr/{bin,sbin}
   /{bin,sbin}
