@@ -46,6 +46,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'moll/vim-node',                   { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'elzr/vim-json'
+Plug 'pantharshit00/vim-prisma'
 Plug 'inkarkat/closetag.vim',           { 'for': ['html', 'css', 'javascript.jsx'] } " <C-_>
 Plug 'mattn/emmet-vim',                 { 'for': ['html', 'css', 'javascript.jsx'] } " <C-y>,
 Plug 'tmhedberg/matchit'                " % finds next thing
