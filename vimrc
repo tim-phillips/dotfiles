@@ -168,11 +168,7 @@ function! LightlineFilename()
 endfunction
 
 " ================ Shortcuts ====================
-nnoremap : :
-nnoremap ; ;
-inoremap jj <Esc>
-inoremap jk <Esc>
-inoremap kj <Esc>
+inoremap nn <Esc>
 
 " new split and switch to it
 nnoremap <leader>w <C-w>v<C-w>l
