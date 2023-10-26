@@ -6,6 +6,7 @@
     tree = log --graph --decorate --pretty=oneline --abbrev-commit
     last = log -1 HEAD
     find = log --name-status --oneline -G
+    all = "!f() { ls -R -d */.git | xargs -I{} bash -c \"echo {} && git -C {}/../ $1\"; }; f"
 [user]
     name = Tim Phillips
     email = timphillips@hey.com
