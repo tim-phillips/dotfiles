@@ -15,6 +15,8 @@ alias f='open -a Finder ./'
 alias shebang='echo "#!/usr/bin/env bash"'
 alias nl='npm list --depth 0'
 alias nlg='nl -g'
+alias tr='tree'
+alias cat='bat'
 
 alias s='git status'
 alias gs='git status'
@@ -37,10 +39,15 @@ alias gcp='git cherry-pick'
 alias linecount_js='git ls-files | grep "\.js" | xargs wc -l'
 alias linecount_ts='git ls-files | grep "\.ts" | xargs wc -l'
 
+alias cdk='npx aws-cdk'
+
+alias startd6='~/deep6/application-team-scripts/frankenscript/frankenscript.sh'
+
 export CLICOLOR=1
 export TERM=xterm-256color
 export EDITOR=nvim
 export TZ='America/Los_Angeles'
+export BAT_THEME='Sublime Snazzy'
 
 # Setting for the new UTF-8 terminal support in Lion
 export LC_CTYPE=en_US.UTF-8
