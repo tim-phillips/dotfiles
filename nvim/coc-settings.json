@@ -1,14 +1,8 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": [
-    "javascript",
-    "javascriptreact",
-    "typescript",
-    "typescriptreact",
-    "json",
-    "graphql",
-    "css",
-    "markdown"
-  ],
-  "tsserver.enableJavascript": false,
+  "suggest.noselect": true,
+  "coc.preferences.formatOnSave": true,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": true,
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
+  "react-refactor.produceClass": false,
   "tailwindCSS.headwind.runOnSave": false
 }
