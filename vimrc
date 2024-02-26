@@ -86,20 +86,21 @@ call plug#end()
 " CoC
 let g:coc_global_extensions = [
   \'coc-css',
+  \'coc-deno',
   \'coc-eslint',
-  \'coc-flow',
   \'coc-format-json',
   \'coc-html',
   \'coc-json',
   \'coc-nav',
   \'coc-prettier',
   \'coc-prisma',
+  \'coc-pyright',
+  \'coc-react-refactor',
   \'coc-sh',
   \'coc-snippets',
   \'coc-sql',
   \'@yaegassy/coc-tailwindcss3',
   \'coc-tsserver',
-  \'coc-react-refactor',
 \]
 " Use tab
 inoremap <silent><expr> <TAB>
