@@ -173,7 +173,7 @@ function! LightlineFilename()
 endfunction
 
 " ================ Shortcuts ====================
-inoremap nn <Esc>
+inoremap ii <Esc>
 
 " new split and switch to it
 nnoremap <leader>w <C-w>v<C-w>l
