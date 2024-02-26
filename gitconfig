@@ -7,6 +7,8 @@
     last = log -1 HEAD
     find = log --name-status --oneline -G
     all = "!f() { ls -R -d */.git | xargs -I{} bash -c \"echo {} && git -C {}/../ $1\"; }; f"
+    dw = diff --word-diff
+    bw = blame -w -C -C -C
 [user]
     name = Tim Phillips
     email = timphillips@hey.com
