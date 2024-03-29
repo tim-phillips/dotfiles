@@ -151,6 +151,7 @@ let delimitMate_expand_space = 1
 let g:netrw_liststyle=3
 let g:jsx_ext_required=0
 let g:undotree_SetFocusWhenToggle = 1
+let NERDTreeQuitOnOpen=1
 let g:vim_markdown_folding_disabled=1
 let g:user_emmet_settings = {'javascript' : {'extends' : 'jsx'}}
 let g:python_host_prog = '/usr/local/bin/python2'
