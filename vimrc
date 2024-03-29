@@ -67,6 +67,7 @@ Plug 'pechorin/any-jump.vim'
 Plug 'tpope/vim-repeat'
 Plug 'easymotion/vim-easymotion'
 Plug 'pixelastic/vim-undodir-tree'
+Plug 'github/copilot.vim'
 " Plug 'honza/vim-snippets'
 " Plug 'SirVer/ultisnips'
 " Plug 'othree/yajs.vim',                 { 'for': ['javascript', 'javascript.jsx'] }
@@ -97,25 +98,12 @@ let g:coc_global_extensions = [
   \'coc-pyright',
   \'coc-react-refactor',
   \'coc-sh',
-  \'coc-snippets',
   \'coc-sql',
   \'@yaegassy/coc-tailwindcss3',
   \'coc-tsserver',
 \]
-" Use tab
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-" Make <CR> auto-select the first completion item and notify coc.nvim to
-" format on enter, <cr> could be remapped by other vim plugin
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+inoremap <silent><expr> <C-j> coc#pum#visible() ? coc#pum#next(1) : "\<C-j>"
+inoremap <silent><expr> <C-k> coc#pum#visible() ? coc#pum#prev(1) : "\<C-k>"
 " Use <c-space> to trigger completion
 inoremap <silent><expr> <c-space> coc#refresh()
 " Use `[g` and `]g` to navigate diagnostics
@@ -159,7 +147,8 @@ let g:python3_host_prog = '/usr/local/bin/python3'
 let g:ackprg = 'ag --vimgrep'
 let g:used_javascript_libs = 'underscore,react'
 let g:tcomment#filetype#guess_typescriptreact = 1
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif "closes preview split when leaving insert mode
+"closes preview split when leaving insert mode
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 " lightline full path (requires vim-fugitive)
 " https://github.com/itchyny/lightline.vim/issues/293
