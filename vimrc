@@ -41,7 +41,6 @@ Plug 'myusuf3/numbers.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'scrooloose/nerdtree',             { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'tpope/vim-surround'
-Plug 'mileszs/ack.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/javascript-libraries-syntax.vim', { 'for': ['javascript', 'javascript.jsx'] }
 Plug 'moll/vim-node',                   { 'for': ['javascript', 'javascript.jsx'] }
@@ -87,16 +86,13 @@ call plug#end()
 " CoC
 let g:coc_global_extensions = [
   \'coc-css',
-  \'coc-deno',
   \'coc-eslint',
   \'coc-format-json',
   \'coc-html',
   \'coc-json',
-  \'coc-nav',
   \'coc-prettier',
   \'coc-prisma',
   \'coc-pyright',
-  \'coc-react-refactor',
   \'coc-sh',
   \'coc-sql',
   \'@yaegassy/coc-tailwindcss3',
