@@ -11,7 +11,7 @@
     bw = blame -w -C -C -C
 [user]
     name = Tim Phillips
-    email = timphillips@hey.com
+    email = 3578574+tim-phillips@users.noreply.github.com
 [filter "media"]
     clean = git-media-clean %f
     smudge = git-media-smudge %f

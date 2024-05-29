@@ -6,8 +6,6 @@ alias ll='ls -FGlAhp'
 alias tree='tree -I "*node_modules*"'
 alias path='echo -e ${PATH//:/\\n}'
 alias mkdir='mkdir -p'
-alias python='python3'
-alias pip='pip3'
 alias sed='gsed'
 alias whatismyip='ipconfig getifaddr en0'
 alias ip='ipconfig getifaddr en0'
@@ -68,3 +66,4 @@ ql () { qlmanage -p "$*" >& /dev/null; }  # ql: Opens any file in MacOS Quickloo
 # http://natelandau.com/my-mac-osx-bash_profile/
 
 export PIPENV_VENV_IN_PROJECT=1
+. "$HOME/.rye/env"

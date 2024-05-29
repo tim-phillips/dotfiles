@@ -21,10 +21,6 @@ fpath=(~/.zsh $fpath)
 autoload -Uz compinit
 compinit -u
 
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
