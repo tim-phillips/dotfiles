@@ -8,11 +8,7 @@ set hlsearch incsearch
 set scrolloff=6 sidescrolloff=15 sidescroll=1
 set history=100000
 
-nnoremap ; :
-nnoremap : ;
-inoremap jj <Esc>
-inoremap jk <Esc>
-inoremap kj <Esc>
+inoremap ii <Esc>
 nnoremap <leader>q :q<CR>
 nnoremap <leader><space> :nohlsearch<CR>
 
