@@ -9,6 +9,13 @@
     all = "!f() { ls -R -d */.git | xargs -I{} bash -c \"echo {} && git -C {}/../ $1\"; }; f"
     dw = diff --word-diff
     bw = blame -w -C -C -C
+    # https://stackoverflow.com/questions/1186535/how-do-i-modify-a-specific-commit
+    fixup = "!fn() { \
+        _FIXUP_COMMIT=`git rev-parse ${1}` && \
+        git commit -m \"fixup! ${_FIXUP_COMMIT}\" && \
+        git diff --quiet || STASHED=true && git stash push -m \"fixup-temp-stash\" && \
+        GIT_EDITOR=true git rebase --autosquash -i ${_FIXUP_COMMIT}^ && \
+        [ \"$STASHED\" = true ] && git stash pop; }; fn"
 [user]
     name = Tim Phillips
     email = 3578574+tim-phillips@users.noreply.github.com
