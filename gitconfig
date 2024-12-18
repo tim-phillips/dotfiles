@@ -3,7 +3,7 @@
     s = status
     co = checkout
     ci = commit
-    tree = log --graph --decorate --pretty=oneline --abbrev-commit
+    tree = log --graph --decorate --pretty=oneline --abbrev-commit --color=always
     last = log -1 HEAD
     find = log --name-status --oneline -G
     all = "!f() { ls -R -d */.git | xargs -I{} bash -c \"echo {} && git -C {}/../ $1\"; }; f"
