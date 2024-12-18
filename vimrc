@@ -152,6 +152,7 @@ let g:python3_host_prog = '/usr/local/bin/python3'
 let g:ackprg = 'ag --vimgrep'
 let g:used_javascript_libs = 'underscore,react'
 let g:tcomment#filetype#guess_typescriptreact = 1
+let g:NERDTreeCaseSensitiveFS=3
 "closes preview split when leaving insert mode
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
