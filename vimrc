@@ -103,7 +103,7 @@ inoremap <silent><expr> <TAB>
       \ exists('b:_copilot.suggestions') ? copilot#Accept("\<CR>") :
       \ CheckBackSpace() ? "\<Tab>" :
       \ coc#refresh()
-function! CheckBackspace() abort
+function! CheckBackSpace() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
