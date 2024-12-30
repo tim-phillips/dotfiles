@@ -24,6 +24,7 @@ nnoremap <C-l> <C-w>l
 
 " idea specific
 nmap <C-o> :action Back<CR>
+nmap <C-i> :action Forward<CR>
 vnoremap gc :action CommentByLineComment<CR>
 nnoremap gcc :action CommentByLineComment<CR>
 nnoremap gd :action GotoDeclaration<CR>
