@@ -66,3 +66,4 @@ ql () { qlmanage -p "$*" >& /dev/null; }  # ql: Opens any file in MacOS Quickloo
 
 export PIPENV_VENV_IN_PROJECT=1
 . "$HOME/.rye/env"
+. "$HOME/.cargo/env"
