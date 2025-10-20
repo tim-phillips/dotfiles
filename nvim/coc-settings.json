@@ -1,13 +1,12 @@
 {
   "suggest.noselect": true,
   "coc.preferences.formatOnSave": true,
+  "eslint.experimental.useFlatConfig": true,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingEmptyBraces": true,
   "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
-  "react-refactor.produceClass": false,
   "tailwindCSS.headwind.runOnSave": false,
   "python.formatting.provider": "black",
   "python.linting.mypyEnabled": true,
   "pyright.organizeimports.provider": "isort",
-  "pyright.testing.provider": "pytest",
-  "snippets.ultisnips.pythonPrompt": false
+  "pyright.testing.provider": "pytest"
 }
