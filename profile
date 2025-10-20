@@ -42,7 +42,6 @@ alias cdk='npx aws-cdk'
 alias startd6='~/deep6/application-team-scripts/frankenscript/frankenscript.sh'
 
 export CLICOLOR=1
-export TERM=xterm-256color
 export EDITOR=nvim
 export TZ='America/Los_Angeles'
 export BAT_THEME='Sublime Snazzy'
