@@ -3,7 +3,11 @@
 " ================ General Config ====================
 filetype on
 let mapleader=","
-set clipboard+=unnamedplus " y, yy, d, dd copy to Mac clipboard
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed "OSX
+else
+  set clipboard=unnamedplus "Linux
+endif
 set title ruler number relativenumber showcmd visualbell noerrorbells
 set hidden smartindent shiftwidth=2 softtabstop=2 tabstop=2 expandtab
 set timeoutlen=1000 ttimeoutlen=10 splitright splitbelow
