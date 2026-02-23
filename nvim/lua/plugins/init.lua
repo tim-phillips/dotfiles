@@ -10,12 +10,6 @@ return {
     },
   },
   {
-    "zbirenbaum/copilot.lua",
-    opts = {
-      copilot_node_command = "/Users/tim/.asdf/installs/nodejs/22.19.0/bin/node",
-    },
-  },
-  {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
