@@ -39,6 +39,34 @@ alias gcp='git cherry-pick'
 alias linecount_js='git ls-files | grep "\.js" | xargs wc -l'
 alias linecount_ts='git ls-files | grep "\.ts" | xargs wc -l'
 
+# Find and replace text across all git-tracked files
+# Usage: replace <from> <to> [path]  (path defaults to current directory)
+replace() {
+  local from="$1"
+  local to="$2"
+  local root="${3:-.}"
+
+  if [[ -z "$from" || -z "$to" ]]; then
+    echo "usage: replace <from> <to> [path]" >&2
+    return 1
+  fi
+
+  escape_sed() {
+    printf '%s' "$1" | gsed 's/[.[\*^$\/&]/\\&/g'
+  }
+
+  local from_escaped
+  from_escaped="$(escape_sed "$from")"
+
+  git -C "$root" ls-files -z \
+  | while IFS= read -r -d '' file; do
+      local full_path="$root/$file"
+
+      [[ -f "$full_path" && ! -L "$full_path" ]] || continue
+      gsed -i "s/${from_escaped}/${to}/g" "$full_path"
+    done
+}
+
 alias cdk='npx aws-cdk'
 
 alias startd6='~/deep6/application-team-scripts/frankenscript/frankenscript.sh'
