@@ -15,6 +15,8 @@ alias nl='npm list --depth 0'
 alias nlg='nl -g'
 alias tr='tree'
 alias cat='bat'
+alias cc='claude'
+alias oc='opencode'
 
 alias s='git status'
 alias gs='git status'
