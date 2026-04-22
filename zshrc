@@ -23,5 +23,6 @@ compinit -u
 
 source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
+bindkey '^D' delete-char
 bindkey '^[OA' history-substring-search-up
 bindkey '^[OB' history-substring-search-down
