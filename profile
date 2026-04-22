@@ -71,6 +71,8 @@ alias cdk='npx aws-cdk'
 
 alias startd6='~/deep6/application-team-scripts/frankenscript/frankenscript.sh'
 
+export PATH="$PATH:/Users/tim/scripts"
+
 export CLICOLOR=1
 export EDITOR=nvim
 export TZ='America/Los_Angeles'
