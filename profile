@@ -39,6 +39,11 @@ alias gcp='git cherry-pick'
 alias linecount_js='git ls-files | grep "\.js" | xargs wc -l'
 alias linecount_ts='git ls-files | grep "\.ts" | xargs wc -l'
 
+alias wm='workmux'
+alias wmd='workmux dashboard'
+alias wma='workmux add'
+alias ch='claude-history'
+
 # Find and replace text across all git-tracked files
 # Usage: replace <from> <to> [path]  (path defaults to current directory)
 replace() {
