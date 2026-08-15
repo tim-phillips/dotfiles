@@ -1,7 +1,6 @@
 case $OSTYPE in darwin*) alias vim='nvim'; echo ">^.^<" ;; esac
 
 alias cl='clear'
-alias mv='mv -i'
 alias ll='ls -FGlAhp'
 alias tree='tree -I "*node_modules*"'
 alias path='echo -e ${PATH//:/\\n}'
