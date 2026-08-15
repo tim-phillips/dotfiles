@@ -32,3 +32,5 @@
     sort = -committerdate
 [rerere]
 	enabled = true
+[remote]
+	pushDefault = origin
