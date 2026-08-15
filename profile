@@ -30,7 +30,7 @@ alias ga='git add'
 alias gc='git checkout'
 alias gco='git checkout'
 alias gcd='git checkout develop'
-alias gcm='git commit -m'
+alias gcm='git checkout main'
 alias gp='git pull'
 alias gl='git log --oneline --graph --decorate --all'
 alias gr='git for-each-ref --format="%(refname:short)"' # "refs/heads/feature/*"
