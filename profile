@@ -1,4 +1,8 @@
-case $OSTYPE in darwin*) alias vim='nvim'; echo ">^.^<" ;; esac
+case $OSTYPE in darwin*)
+  alias vim='nvim'
+  echo ">^.^<"
+  ;;
+esac
 
 alias cl='clear'
 alias ll='ls -FGlAhp'
@@ -69,8 +73,8 @@ replace() {
   local from_escaped
   from_escaped="$(escape_sed "$from")"
 
-  git -C "$root" ls-files -z \
-  | while IFS= read -r -d '' file; do
+  git -C "$root" ls-files -z |
+    while IFS= read -r -d '' file; do
       local full_path="$root/$file"
 
       [[ -f "$full_path" && ! -L "$full_path" ]] || continue
@@ -93,17 +97,17 @@ export BAT_THEME='Sublime Snazzy'
 export LC_CTYPE=en_US.UTF-8
 #export LC_ALL=en_US.UTF-8
 
-alias cd..='cd ../'                       # Go back 1 directory level (for fast typers)
-alias ..='cd ../'                         # Go back 1 directory level
-alias ...='cd ../../'                     # Go back 2 directory levels
-alias .3='cd ../../../'                   # Go back 3 directory levels
-alias .4='cd ../../../../'                # Go back 4 directory levels
-alias .5='cd ../../../../../'             # Go back 5 directory levels
-alias .6='cd ../../../../../../'          # Go back 6 directory levels
+alias cd..='cd ../'              # Go back 1 directory level (for fast typers)
+alias ..='cd ../'                # Go back 1 directory level
+alias ...='cd ../../'            # Go back 2 directory levels
+alias .3='cd ../../../'          # Go back 3 directory levels
+alias .4='cd ../../../../'       # Go back 4 directory levels
+alias .5='cd ../../../../../'    # Go back 5 directory levels
+alias .6='cd ../../../../../../' # Go back 6 directory levels
 
-mcd () { mkdir -p "$1" && cd "$1"; }      # mcd: Makes new Dir and jumps inside
-trash () { command mv "$@" ~/.Trash ; }   # trash: Moves a file to the MacOS trash
-ql () { qlmanage -p "$*" >& /dev/null; }  # ql: Opens any file in MacOS Quicklook Preview
+mcd() { mkdir -p "$1" && cd "$1"; }    # mcd: Makes new Dir and jumps inside
+trash() { command mv "$@" ~/.Trash; }  # trash: Moves a file to the MacOS trash
+ql() { qlmanage -p "$*" >&/dev/null; } # ql: Opens any file in MacOS Quicklook Preview
 
 # http://natelandau.com/my-mac-osx-bash_profile/
 
