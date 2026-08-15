@@ -44,6 +44,11 @@ alias wmd='workmux dashboard'
 alias wma='workmux add'
 alias ch='claude-history'
 
+vf() {
+  local file
+  file=$(fzf --preview 'bat --color=always {} 2>/dev/null || cat {}') && vim "$file"
+}
+
 # Find and replace text across all git-tracked files
 # Usage: replace <from> <to> [path]  (path defaults to current directory)
 replace() {
