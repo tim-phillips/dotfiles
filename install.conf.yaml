@@ -23,6 +23,6 @@
 
 - shell:
   - command: ./bootstrap
-    description: Installing packages (Homebrew, prezto, rust, fzf)
+    description: Installing packages (Homebrew, fzf, prezto, tmux, rust)
     stdout: true
     stderr: true
