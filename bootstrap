@@ -30,8 +30,7 @@ if brew trust --help >/dev/null 2>&1; then
   done < <(sed -nE 's/^tap "([^"]+)".*/\1/p' "${BASEDIR}/Brewfile")
 fi
 
-# Brew packages
-# --no-upgrade: install what's missing, never upgrade what's already there
+# brew install
 if brew bundle check --no-upgrade --file="${BASEDIR}/Brewfile" >/dev/null 2>&1; then
   log "Brewfile already satisfied"
 else
@@ -52,8 +51,7 @@ if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
     "${ZDOTDIR:-$HOME}/.zprezto"
 fi
 
-# tmux plugins: tmux.conf clones tpm itself on first launch, but that only runs
-# once -- plugins added to the config later need an explicit install
+# tmux plugins
 TPM="${HOME}/.tmux/plugins/tpm"
 if [ ! -d "$TPM" ]; then
   log "Installing tpm"
@@ -62,8 +60,7 @@ fi
 log "Syncing tmux plugins"
 "$TPM/bin/install_plugins" >/dev/null
 
-# rust: sourced by profile (~/.cargo/env), and cargo builds blink.cmp's native
-# fuzzy matcher in nvim -- without it blink falls back to the slower lua one
+# rust
 if [ ! -f "${HOME}/.cargo/env" ]; then
   log "Installing rustup"
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
