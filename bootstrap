@@ -59,6 +59,7 @@ if [ ! -d "$TPM" ]; then
   git clone https://github.com/tmux-plugins/tpm "$TPM"
 fi
 log "Syncing tmux plugins"
+sed -nE "s/^set -g @plugin '([^']+)'.*/  \1/p" "${BASEDIR}/tmux.conf"
 "$TPM/bin/install_plugins" >/dev/null
 
 # rust
