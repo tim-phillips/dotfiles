@@ -22,6 +22,14 @@ elif [ -x /usr/local/bin/brew ]; then
   eval "$(/usr/local/bin/brew shellenv)"
 fi
 
+# brew trust
+if brew trust --help >/dev/null 2>&1; then
+  log "Trusting third-party taps"
+  while IFS= read -r tap_name; do
+    brew trust --tap "$tap_name" >/dev/null
+  done < <(sed -nE 's/^tap "([^"]+)".*/\1/p' "${BASEDIR}/Brewfile")
+fi
+
 # Brew packages
 # --no-upgrade: install what's missing, never upgrade what's already there
 if brew bundle check --no-upgrade --file="${BASEDIR}/Brewfile" >/dev/null 2>&1; then
