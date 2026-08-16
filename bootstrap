@@ -44,6 +44,16 @@ if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
     "${ZDOTDIR:-$HOME}/.zprezto"
 fi
 
+# tmux plugins: tmux.conf clones tpm itself on first launch, but that only runs
+# once -- plugins added to the config later need an explicit install
+TPM="${HOME}/.tmux/plugins/tpm"
+if [ ! -d "$TPM" ]; then
+  log "Installing tpm"
+  git clone https://github.com/tmux-plugins/tpm "$TPM"
+fi
+log "Syncing tmux plugins"
+"$TPM/bin/install_plugins" >/dev/null
+
 # rust: sourced by profile (~/.cargo/env), and cargo builds blink.cmp's native
 # fuzzy matcher in nvim -- without it blink falls back to the slower lua one
 if [ ! -f "${HOME}/.cargo/env" ]; then
