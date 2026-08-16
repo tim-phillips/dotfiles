@@ -26,6 +26,7 @@ fi
 if brew trust --help >/dev/null 2>&1; then
   log "Trusting third-party taps"
   while IFS= read -r tap_name; do
+    printf '  %s\n' "$tap_name"
     brew trust --tap "$tap_name" >/dev/null
   done < <(sed -nE 's/^tap "([^"]+)".*/\1/p' "${BASEDIR}/Brewfile")
 fi
