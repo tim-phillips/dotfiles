@@ -1,7 +1,8 @@
 # Source
 test -e "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" && source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+test -e /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh &&
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Minimize terminal prompt
 # DISABLE_AUTO_TITLE="true"
@@ -9,8 +10,8 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 setopt ignoreeof # prevent ctrl-D from exiting shell
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
-eval "$(mise activate zsh)"
+[ -x /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
+command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 
 export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
@@ -22,7 +23,8 @@ compinit -u
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+test -e /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh &&
+  source /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 bindkey '^D' delete-char
 bindkey '^[OA' history-substring-search-up

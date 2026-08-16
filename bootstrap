@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+#
+# Installs everything the shell config expects to exist.
+# Idempotent: safe to re-run, skips anything already present.
+
+set -euo pipefail
+
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+log() { printf '\n==> %s\n' "$1"; }
+
+# Homebrew
+if ! command -v brew >/dev/null 2>&1; then
+  log "Installing Homebrew"
+  NONINTERACTIVE=1 /bin/bash -c \
+    "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [ -x /usr/local/bin/brew ]; then
+  eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# Brew packages
+# --no-upgrade: install what's missing, never upgrade what's already there
+if brew bundle check --no-upgrade --file="${BASEDIR}/Brewfile" >/dev/null 2>&1; then
+  log "Brewfile already satisfied"
+else
+  log "Installing Brewfile packages"
+  brew bundle install --no-upgrade --file="${BASEDIR}/Brewfile"
+fi
+
+# fzf keybindings / completion (~/.fzf.zsh)
+if [ ! -f "${HOME}/.fzf.zsh" ] && [ -x "$(brew --prefix)/opt/fzf/install" ]; then
+  log "Installing fzf shell integration"
+  "$(brew --prefix)/opt/fzf/install" --key-bindings --completion --no-update-rc
+fi
+
+# prezto
+if [ ! -d "${ZDOTDIR:-$HOME}/.zprezto" ]; then
+  log "Installing prezto"
+  git clone --recursive https://github.com/sorin-ionescu/prezto.git \
+    "${ZDOTDIR:-$HOME}/.zprezto"
+fi
+
+# rust: sourced by profile (~/.cargo/env), and cargo builds blink.cmp's native
+# fuzzy matcher in nvim -- without it blink falls back to the slower lua one
+if [ ! -f "${HOME}/.cargo/env" ]; then
+  log "Installing rustup"
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --no-modify-path
+fi
+
+log "Bootstrap complete"

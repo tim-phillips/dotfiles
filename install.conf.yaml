@@ -21,5 +21,8 @@
 
 - create: ['~/.vim', '~/.vim/_swaps', '~/.vim/_backups']
 
-# - shell:
-#   - [git submodule update --init --recursive, Installing submodules]
+- shell:
+  - command: ./bootstrap
+    description: Installing packages (Homebrew, prezto, rust, fzf)
+    stdout: true
+    stderr: true

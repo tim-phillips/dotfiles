@@ -112,4 +112,4 @@ ql() { qlmanage -p "$*" >&/dev/null; } # ql: Opens any file in MacOS Quicklook P
 # http://natelandau.com/my-mac-osx-bash_profile/
 
 export PIPENV_VENV_IN_PROJECT=1
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
