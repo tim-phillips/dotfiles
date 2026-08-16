@@ -13,8 +13,6 @@ setopt ignoreeof # prevent ctrl-D from exiting shell
 [ -x /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 
-export DENO_INSTALL="$HOME/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
 fpath=(~/.zsh $fpath)
