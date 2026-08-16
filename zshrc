@@ -27,3 +27,6 @@ test -e /opt/homebrew/share/zsh-history-substring-search/zsh-history-substring-s
 bindkey '^D' delete-char
 bindkey '^[OA' history-substring-search-up
 bindkey '^[OB' history-substring-search-down
+
+# machine-local, untracked
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local

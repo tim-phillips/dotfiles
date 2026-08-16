@@ -76,3 +76,5 @@ fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
 
+# machine-local, untracked
+[ -f ~/.zprofile.local ] && source ~/.zprofile.local
