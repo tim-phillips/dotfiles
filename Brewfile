@@ -9,6 +9,7 @@ brew "zsh-history-substring-search"
 # cli tools
 brew "neovim"
 brew "gnu-sed"
+brew "ripgrep"
 brew "bat"
 brew "tree"
 brew "watchman"
