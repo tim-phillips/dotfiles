@@ -18,6 +18,10 @@
     ~/.zshrc:
     ~/.config/nvim:
       create: true
+    ~/.config/workmux/config.yaml:
+      path: workmux.yaml
+      create: true
+      force: true
 
 - create: ['~/.vim', '~/.vim/_swaps', '~/.vim/_backups']
 
