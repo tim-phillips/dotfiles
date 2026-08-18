@@ -21,7 +21,6 @@
     ~/.config/workmux/config.yaml:
       path: workmux.yaml
       create: true
-      force: true
     ~/.local/bin/wm:
       path: bin/wm
       create: true
