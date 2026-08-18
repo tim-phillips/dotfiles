@@ -115,3 +115,6 @@ ql() { qlmanage -p "$*" >&/dev/null; } # ql: Opens any file in MacOS Quicklook P
 
 export PIPENV_VENV_IN_PROJECT=1
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
+
+# machine-local, untracked
+[ -f ~/.profile.local ] && . ~/.profile.local
