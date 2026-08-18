@@ -15,19 +15,16 @@ brew "watchman"
 brew "lazygit"
 brew "gh"
 brew "mosh"
-cask "codex"
 
 # third-party taps
 tap "raine/workmux"
 tap "raine/claude-history"
 tap "raine/aven"
 tap "modem-dev/tap"
-tap "anomalyco/tap"
 brew "raine/workmux/workmux"
 brew "raine/claude-history/claude-history"
 brew "raine/aven/aven"
 brew "modem-dev/tap/hunk"
-brew "anomalyco/tap/opencode"
 
 # nerd fonts
 cask "font-meslo-lg-nerd-font"

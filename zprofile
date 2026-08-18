@@ -20,6 +20,7 @@ typeset -gU cdpath fpath mailpath path
 path=(
   ~/.config/yarn/global/node_modules/.bin
   ~/.local/bin
+  ~/.opencode/bin
   /usr/local/{bin,sbin}
   /usr/{bin,sbin}
   /{bin,sbin}

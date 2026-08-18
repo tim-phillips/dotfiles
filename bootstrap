@@ -39,6 +39,59 @@ else
   brew bundle install --no-upgrade --file="${BASEDIR}/Brewfile"
 fi
 
+# agent CLIs
+#
+# Installed from each vendor's standalone installer rather than Homebrew: they
+# ship often and self-update in place, while brew formulas lag and need a
+# manual `brew upgrade`.
+#
+# Presence is checked by install path, not `command -v`, so a machine still
+# running a Homebrew copy gets migrated instead of skipped.
+#
+# The Homebrew copies are removed FIRST because the codex installer only leaves
+# shell rc files alone when it finds no competing package manager -- and the rc
+# files it would edit (~/.zprofile, ~/.zshrc) are dotbot symlinks into this
+# repo, so it would rewrite tracked files in place.
+
+for pkg in codex opencode; do
+  if brew list "$pkg" >/dev/null 2>&1; then
+    log "Removing Homebrew $pkg (superseded by standalone installer)"
+    brew uninstall --force "$pkg" >/dev/null 2>&1 || true
+  fi
+done
+
+# ~/.local/bin is already on PATH via zprofile, so these two skip rc edits.
+if [ ! -x "${HOME}/.local/bin/claude" ]; then
+  log "Installing Claude Code"
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
+
+if [ ! -x "${HOME}/.local/bin/codex" ]; then
+  log "Installing Codex"
+  curl -fsSL https://chatgpt.com/codex/install.sh | sh
+fi
+
+# opencode hardcodes ~/.opencode/bin, so PATH comes from zprofile and the
+# installer is told explicitly not to touch shell config.
+if [ ! -x "${HOME}/.opencode/bin/opencode" ]; then
+  log "Installing opencode"
+  curl -fsSL https://opencode.ai/install | bash -s -- --no-modify-path
+fi
+
+# workmux agent status hooks
+#
+# Normally self-healing: workmux prompts on first interactive run when it finds
+# an agent without status tracking. That prompt never fires on a dispatch-only
+# host like the mini, where worktrees are created over ssh and nobody is sitting
+# at a terminal -- and without the hooks `workmux status` reports zero agents no
+# matter how many are running, which is what the dashboard reads.
+#
+# `workmux setup` itself refuses to run without a TTY, so this can only report.
+if command -v workmux >/dev/null 2>&1 &&
+   ! grep -q workmux "${HOME}/.claude/settings.json" 2>/dev/null; then
+  log "workmux status hooks missing -- run: workmux setup --hooks"
+fi
+
 # fzf keybindings / completion (~/.fzf.zsh)
 if [ ! -f "${HOME}/.fzf.zsh" ] && [ -x "$(brew --prefix)/opt/fzf/install" ]; then
   log "Installing fzf shell integration"
