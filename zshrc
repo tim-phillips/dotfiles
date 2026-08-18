@@ -10,6 +10,10 @@ test -e /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh 
 
 setopt ignoreeof # prevent ctrl-D from exiting shell
 
+# prezto's directory module does `unsetopt clobber`. Keep that guard for typed
+# commands, but not for agents/scripts that source this file non-interactively.
+[[ -o interactive ]] || setopt clobber
+
 [ -x /opt/homebrew/bin/brew ] && eval "$(/opt/homebrew/bin/brew shellenv)"
 command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 
