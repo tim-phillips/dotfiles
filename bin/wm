@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+#
+# wm — run workmux against the always-on mini instead of the local machine.
+#
+# Walk-away agent sessions belong on a host that doesn't sleep in a bag, so
+# they keep working while the laptop is closed and stay reachable from any
+# device. This wraps workmux so the remote host is the default and local is
+# the opt-out (`wml`), because a habit you'd have to remember loses to one
+# you'd have to actively bypass.
+#
+# Layout on the host: ~/work/<project> and ~/personal/<project>. The path
+# prefix *is* the context — there's no registry to drift, and workmux has no
+# project registry of its own to hang it off.
+#
+# Context defaults to personal. The work machine sets `export WM_CONTEXT=work`
+# in ~/.zprofile.local (untracked, machine-local).
+
+set -euo pipefail
+
+WM_HOST="${WM_HOST:-mini}"
+WM_CONTEXT="${WM_CONTEXT:-personal}"
+
+die() { printf 'wm: %s\n' "$*" >&2; exit 1; }
+
+# On the host itself there's nothing to dispatch.
+if [[ "$(hostname -s)" == "$WM_HOST" ]]; then
+  exec workmux "$@"
+fi
+
+[[ $# -gt 0 ]] || die "usage: wm <workmux-subcommand> [args...]"
+
+# Which project? Derived from the local repo you're standing in, mapped onto
+# the host by basename. Keeps `wm add` feeling identical to `workmux add`.
+if ! local_root=$(git rev-parse --show-toplevel 2>/dev/null); then
+  die "not in a git repository (cd into the project you want to work on)"
+fi
+project=$(basename "$local_root")
+remote_dir="\$HOME/$WM_CONTEXT/$project"
+
+# Fail with something actionable rather than a bare shell error.
+if ! ssh "$WM_HOST" "[ -d $remote_dir ]" 2>/dev/null; then
+  die "$WM_HOST has no $WM_CONTEXT/$project — clone it there first, or set WM_CONTEXT"
+fi
+
+subcommand=$1
+
+# `add` needs extra flags remotely that it doesn't need locally: there's no
+# attached tmux session over SSH, so the window needs an explicit parent and
+# must not try to switch to itself. One session per context keeps work and
+# personal windows separated on the host as well as on disk.
+if [[ "$subcommand" == "add" ]]; then
+  ssh "$WM_HOST" "tmux has-session -t $WM_CONTEXT 2>/dev/null || tmux new-session -d -s $WM_CONTEXT"
+  set -- "$subcommand" --parent-session "$WM_CONTEXT" --background "${@:2}"
+fi
+
+# printf %q so prompts containing spaces and quotes survive the trip.
+printf -v remote_args '%q ' "$@"
+ssh "$WM_HOST" "cd $remote_dir && workmux $remote_args"

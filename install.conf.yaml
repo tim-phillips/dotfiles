@@ -22,6 +22,9 @@
       path: workmux.yaml
       create: true
       force: true
+    ~/.local/bin/wm:
+      path: bin/wm
+      create: true
 
 - create: ['~/.vim', '~/.vim/_swaps', '~/.vim/_backups']
 

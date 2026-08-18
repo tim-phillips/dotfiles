@@ -44,9 +44,11 @@ alias gcp='git cherry-pick'
 alias linecount_js='git ls-files | grep "\.js" | xargs wc -l'
 alias linecount_ts='git ls-files | grep "\.ts" | xargs wc -l'
 
-alias wm='workmux'
+# Agent sessions default to the always-on mini (see bin/wm); wml* stays local.
 alias wmd='workmux dashboard'
-alias wma='workmux add'
+alias wma='wm add'
+alias wml='workmux'
+alias wmla='workmux add'
 alias ch='claude-history'
 
 vf() {
