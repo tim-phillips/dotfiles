@@ -44,13 +44,53 @@ fi
 
 subcommand=$1
 
-# `add` needs extra flags remotely that it doesn't need locally: there's no
-# attached tmux session over SSH, so the window needs an explicit parent and
-# must not try to switch to itself. One session per context keeps work and
-# personal windows separated on the host as well as on disk.
 if [[ "$subcommand" == "add" ]]; then
+  # Base the worktree on the *fetched* tip of whatever branch you're standing
+  # in locally. One rule covers both cases: on develop you get a current
+  # develop rather than whatever the host last pulled, and on a feature branch
+  # you stack on it, which is the reason you're standing there.
+  #
+  # It has to happen here because workmux won't do it -- it bases on the
+  # host's checked-out branch, its own docs say detection "does not fetch",
+  # and there's no pre-create hook to bolt it onto.
+  #
+  # Skipped when the invocation already decides its own base: --pr checks out
+  # someone else's branch, and an explicit --base is the escape hatch.
+  inject_base=1
+  for arg in "${@:2}"; do
+    case "$arg" in
+      --base | --base=* | --pr | --pr=*) inject_base=0; break ;;
+    esac
+  done
+
+  base_ref=""
+  if (( inject_base )) && branch=$(git symbolic-ref --quiet --short HEAD); then
+    printf -v q_branch '%q' "$branch"
+    # The fetch fails noisily on a branch that was never pushed, so let it go
+    # quiet and let rev-parse be what decides -- then the error can name the
+    # actual problem instead of echoing git's.
+    if ! ssh "$WM_HOST" "cd $remote_dir &&
+           git fetch --quiet origin $q_branch 2>/dev/null;
+           git rev-parse --verify --quiet origin/$q_branch >/dev/null"; then
+      die "$WM_HOST can't see origin/$branch — push the branch first, or pass --base"
+    fi
+    base_ref="origin/$branch"
+  fi
+
+  # `add` needs flags remotely that it doesn't need locally: there's no
+  # attached tmux session over SSH, so the window needs an explicit parent and
+  # must not try to switch to itself. One session per context keeps work and
+  # personal windows separated on the host as well as on disk.
   ssh "$WM_HOST" "tmux has-session -t $WM_CONTEXT 2>/dev/null || tmux new-session -d -s $WM_CONTEXT"
-  set -- "$subcommand" --parent-session "$WM_CONTEXT" --background "${@:2}"
+
+  # Spelled out twice rather than built in an array: this runs under bash 3.2,
+  # where expanding an empty array trips `set -u`.
+  if [[ -n "$base_ref" ]]; then
+    set -- "$subcommand" --parent-session "$WM_CONTEXT" --background \
+           --base "$base_ref" "${@:2}"
+  else
+    set -- "$subcommand" --parent-session "$WM_CONTEXT" --background "${@:2}"
+  fi
 fi
 
 # printf %q so prompts containing spaces and quotes survive the trip.
