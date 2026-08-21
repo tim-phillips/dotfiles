@@ -27,6 +27,9 @@
     ~/.ssh/config.d/mini.conf:
       path: ssh/mini.conf
       create: true
+    ~/.local/bin/pr-review-poll:
+      path: bin/pr-review-poll
+      create: true
 
 - create: ['~/.vim', '~/.vim/_swaps', '~/.vim/_backups']
 

@@ -1,0 +1,141 @@
+#!/usr/bin/env bash
+#
+# pr-review-poll — dispatch an agent review for PRs waiting on me.
+#
+# A dumb poller that creates smart sessions: it decides *whether* a PR is ready
+# to review and hands the actual reviewing to `/review-pr` in a fresh workmux
+# worktree. Meant to run on the always-on host, where a review's monitor loop
+# can tick for the days a PR stays open without a laptop lid ending it.
+#
+# Dry run unless called with --go, because the sessions it starts post comments
+# to other people's PRs.
+#
+# Config comes from the environment, or ~/.config/pr-review-poll.env if that
+# exists — repo names stay on the machine rather than in this public repo.
+#
+#   PR_POLL_REPOS       owner/repo, space or comma separated  (required)
+#   PR_POLL_ROOT        where clones live      (default ~/work)
+#   PR_POLL_BUFFER_MIN  quiet period since the last commit, minutes (default 30)
+#   PR_POLL_SESSION     tmux session to park windows in (default work)
+#   PR_POLL_STATE       dispatch markers (default ~/.local/state/pr-review-poll)
+
+set -euo pipefail
+
+# The config file supplies defaults; anything already in the environment wins,
+# so a one-off run can override without editing the file. Sourcing alone would
+# do the opposite -- plain `VAR=value` lines clobber what the caller set.
+_cfg_vars="PR_POLL_REPOS PR_POLL_ROOT PR_POLL_BUFFER_MIN PR_POLL_SESSION PR_POLL_STATE"
+for _v in $_cfg_vars; do eval "_pre_$_v=\${$_v:-}"; done
+[ -f "${HOME}/.config/pr-review-poll.env" ] && . "${HOME}/.config/pr-review-poll.env"
+for _v in $_cfg_vars; do
+  eval "_pre=\$_pre_$_v"
+  [ -n "$_pre" ] && eval "$_v=\$_pre"
+done
+unset _v _pre _cfg_vars
+
+PR_POLL_ROOT="${PR_POLL_ROOT:-$HOME/work}"
+PR_POLL_BUFFER_MIN="${PR_POLL_BUFFER_MIN:-30}"
+PR_POLL_SESSION="${PR_POLL_SESSION:-work}"
+PR_POLL_STATE="${PR_POLL_STATE:-$HOME/.local/state/pr-review-poll}"
+
+go=0
+[ "${1:-}" = "--go" ] && go=1
+
+die() { printf 'pr-review-poll: %s\n' "$*" >&2; exit 1; }
+say() { printf '%s\n' "$*"; }
+
+[ -n "${PR_POLL_REPOS:-}" ] || die "PR_POLL_REPOS is unset (try ~/.config/pr-review-poll.env)"
+command -v gh >/dev/null      || die "gh not found"
+command -v workmux >/dev/null || die "workmux not found"
+
+me=$(gh api user --jq .login) || die "gh is not authenticated"
+mkdir -p "$PR_POLL_STATE"
+now=$(date +%s)
+(( go )) || say "DRY RUN — nothing will be dispatched. Re-run with --go to act."
+say "reviewer=$me  buffer=${PR_POLL_BUFFER_MIN}m"
+
+for repo in $(printf '%s' "$PR_POLL_REPOS" | tr ',' ' '); do
+  dir="$PR_POLL_ROOT/${repo##*/}"
+  [ -d "$dir" ] || { say "  $repo: no clone at $dir — skipping"; continue; }
+
+  # Retire finished reviews first. A review worktree has to outlive the review
+  # itself: the monitor's state file lives in the per-worktree gitdir, so
+  # removing it early strands the loop. Once the PR is merged or closed the
+  # loop has stopped on its own and the worktree is just taking up space.
+  #
+  # `pr-<n>` naming is what makes this possible -- workmux would otherwise name
+  # the worktree after the PR's head branch, which says nothing about the PR.
+  while IFS= read -r wt; do
+    name="${wt##*/}"
+    case "$name" in pr-[0-9]*) ;; *) continue ;; esac
+    wt_pr="${name#pr-}"
+
+    state=$(gh pr view "$wt_pr" --repo "$repo" --json state --jq .state 2>/dev/null) || continue
+    case "$state" in MERGED | CLOSED) ;; *) continue ;; esac
+
+    # Never force away work that isn't committed, even on a merged PR -- it
+    # could be something I started by hand in that worktree.
+    if [ -n "$( cd "$wt" && git status --porcelain 2>/dev/null )" ]; then
+      say "  $repo#$wt_pr  $state but worktree is dirty — leaving it for you"
+      continue
+    fi
+
+    if (( go )); then
+      say "  $repo#$wt_pr  $state — removing worktree $name"
+      ( cd "$dir" && workmux remove -f "$name" >/dev/null ) \
+        && rm -f "$PR_POLL_STATE/${repo//\//__}__${wt_pr}" \
+        || say "  $repo#$wt_pr  removal failed — leaving it"
+    else
+      say "  $repo#$wt_pr  $state — WOULD remove worktree $name"
+    fi
+  done < <( cd "$dir" && git worktree list --porcelain | sed -n 's/^worktree //p' )
+
+  for pr in $(gh pr list --repo "$repo" --search "review-requested:@me" \
+                --json number --jq '.[].number' --limit 50); do
+
+    marker="$PR_POLL_STATE/${repo//\//__}__${pr}"
+    if [ -e "$marker" ]; then
+      say "  $repo#$pr  skip: already dispatched ($(date -r "$marker" '+%b %d %H:%M'))"
+      continue
+    fi
+
+    # One call for both remaining questions. `reviews` is authoritative across
+    # machines in a way the skill's per-worktree state file is not.
+    read -r mine last <<EOF
+$(gh pr view "$pr" --repo "$repo" --json reviews,commits \
+    --jq "[([.reviews[]|select(.author.login==\"$me\")]|length), (.commits[-1].committedDate)] | @tsv")
+EOF
+
+    if [ "${mine:-0}" -gt 0 ]; then
+      say "  $repo#$pr  skip: already reviewed it once ($mine review(s)) — leave the loop alone"
+      continue
+    fi
+
+    # Don't review over someone's shoulder while they're still pushing fixes.
+    commit_epoch=$(date -j -f '%Y-%m-%dT%H:%M:%SZ' "$last" +%s 2>/dev/null \
+                || date -d "$last" +%s 2>/dev/null) || commit_epoch=0
+    age_min=$(( (now - commit_epoch) / 60 ))
+    if [ "$commit_epoch" -gt 0 ] && [ "$age_min" -lt "$PR_POLL_BUFFER_MIN" ]; then
+      say "  $repo#$pr  skip: last commit ${age_min}m ago, under ${PR_POLL_BUFFER_MIN}m buffer"
+      continue
+    fi
+
+    # The gate in step 3 is pre-answered rather than removed: /review-pr lives
+    # in the team's repo and editing it would change it for everyone.
+    prompt="/review-pr $pr
+
+Step 3 asks which of the findings to send. The answer is: all.
+Post every finding without waiting for a reply, then continue to step 5."
+
+    if (( go )); then
+      say "  $repo#$pr  dispatch (last commit ${age_min}m ago)"
+      ( cd "$dir" && workmux add --pr "$pr" --name "pr-$pr" \
+          --parent-session "$PR_POLL_SESSION" --background -p "$prompt" ) \
+        && : > "$marker" \
+        || say "  $repo#$pr  DISPATCH FAILED — no marker written, will retry next run"
+    else
+      say "  $repo#$pr  WOULD dispatch (last commit ${age_min}m ago) with prompt:"
+      printf '%s\n' "$prompt" | sed 's/^/        | /'
+    fi
+  done
+done
