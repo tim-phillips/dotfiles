@@ -24,6 +24,9 @@
     ~/.local/bin/wm:
       path: bin/wm
       create: true
+    ~/.ssh/config.d/mini.conf:
+      path: ssh/mini.conf
+      create: true
 
 - create: ['~/.vim', '~/.vim/_swaps', '~/.vim/_backups']
 

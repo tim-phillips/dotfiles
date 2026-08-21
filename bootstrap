@@ -92,6 +92,52 @@ if command -v workmux >/dev/null 2>&1 &&
   log "workmux status hooks missing -- run: workmux setup --hooks"
 fi
 
+# ssh
+#
+# ControlPath's directory has to exist before ssh will multiplex; ssh won't
+# create it, and the failure is an obscure error rather than a clear one.
+#
+# ~/.ssh is normally made by ssh itself at 0700, but on a virgin machine
+# dotbot gets there first (creating it on the way to ~/.ssh/config.d) and
+# leaves it 0755. ssh tolerates that -- it only rejects group/world-writable
+# -- but there's no reason for the directory to be world-readable.
+mkdir -p -m 700 "${HOME}/.ssh/sockets"
+chmod 700 "${HOME}/.ssh"
+
+# The tracked host definitions (ssh/mini.conf, linked into ~/.ssh/config.d)
+# only apply if ~/.ssh/config includes them.
+#
+# Editing this file is worth doing carefully: a malformed line, a truncated
+# write, or a group-writable mode each make ssh refuse to run at all, which
+# takes git with it. Hence the three guards -- the candidate is built in a
+# temp file, parse-checked with `ssh -G` (exit 255 on a bad config, and no
+# network involved), and only then renamed into place. A failure aborts here
+# with the original file untouched, which is the same outcome as never having
+# run: no multiplexing, nothing broken.
+#
+# Prepended rather than appended because `Include` has to precede the Host
+# blocks it should apply to. Landing above OrbStack's include is harmless --
+# neither sets a keyword the other does, and ssh takes the first value found.
+ssh_config="${HOME}/.ssh/config"
+if [ ! -e "$ssh_config" ] ||
+   ! grep -q '^[[:space:]]*Include[[:space:]].*\.ssh/config\.d' "$ssh_config"; then
+  log "Adding ~/.ssh/config.d include to ~/.ssh/config"
+  ssh_tmp=$(mktemp "${ssh_config}.XXXXXX")
+  {
+    printf 'Include ~/.ssh/config.d/*.conf\n\n'
+    if [ -e "$ssh_config" ]; then cat "$ssh_config"; fi
+  } > "$ssh_tmp"
+  chmod 600 "$ssh_tmp"
+  # Warn and skip rather than abort: a config that was already broken before
+  # bootstrap ran shouldn't stop it installing everything else.
+  if ssh -F "$ssh_tmp" -G localhost >/dev/null 2>&1; then
+    mv -f "$ssh_tmp" "$ssh_config"
+  else
+    rm -f "$ssh_tmp"
+    log "Skipped ~/.ssh/config edit: candidate failed ssh's parse check, left as-is"
+  fi
+fi
+
 # fzf keybindings / completion (~/.fzf.zsh)
 if [ ! -f "${HOME}/.fzf.zsh" ] && [ -x "$(brew --prefix)/opt/fzf/install" ]; then
   log "Installing fzf shell integration"
