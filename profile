@@ -44,7 +44,8 @@ alias gcp='git cherry-pick'
 alias linecount_js='git ls-files | grep "\.js" | xargs wc -l'
 alias linecount_ts='git ls-files | grep "\.ts" | xargs wc -l'
 
-# Agent sessions default to the always-on mini (see bin/wm); wml* stays local.
+# wm dispatches to $WM_HOST when a machine sets one, else plain workmux
+# (see bin/wm). wml* is the forced-local escape hatch when it does.
 alias wmd='workmux dashboard'
 alias wma='wm add'
 alias wml='workmux'

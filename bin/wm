@@ -1,29 +1,32 @@
 #!/usr/bin/env bash
 #
-# wm — run workmux against the always-on mini instead of the local machine.
+# wm — run workmux on a remote always-on host instead of the local machine.
 #
 # Walk-away agent sessions belong on a host that doesn't sleep in a bag, so
 # they keep working while the laptop is closed and stay reachable from any
-# device. This wraps workmux so the remote host is the default and local is
-# the opt-out (`wml`), because a habit you'd have to remember loses to one
-# you'd have to actively bypass.
+# device.
+#
+# Remote dispatch is opt-in. With WM_HOST unset this is a passthrough to
+# workmux, so the aliases can be identical everywhere and a machine that
+# shouldn't dispatch simply doesn't. A machine that should sets it in
+# ~/.zprofile.local (untracked, machine-local):
+#
+#   export WM_HOST=mini
+#   export WM_CONTEXT=work
 #
 # Layout on the host: ~/work/<project> and ~/personal/<project>. The path
 # prefix *is* the context — there's no registry to drift, and workmux has no
-# project registry of its own to hang it off.
-#
-# Context defaults to personal. The work machine sets `export WM_CONTEXT=work`
-# in ~/.zprofile.local (untracked, machine-local).
+# project registry of its own to hang it off. Context defaults to personal.
 
 set -euo pipefail
 
-WM_HOST="${WM_HOST:-mini}"
+WM_HOST="${WM_HOST:-}"
 WM_CONTEXT="${WM_CONTEXT:-personal}"
 
 die() { printf 'wm: %s\n' "$*" >&2; exit 1; }
 
-# On the host itself there's nothing to dispatch.
-if [[ "$(hostname -s)" == "$WM_HOST" ]]; then
+# Nothing to dispatch when dispatch is off, or when this *is* the host.
+if [[ -z "$WM_HOST" || "$(hostname -s)" == "$WM_HOST" ]]; then
   exec workmux "$@"
 fi
 
