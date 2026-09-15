@@ -30,6 +30,12 @@
     ~/.local/bin/pr-review-poll:
       path: bin/pr-review-poll
       create: true
+    ~/.local/bin/tmux-resurrect-save-guard:
+      path: bin/tmux-resurrect-save-guard
+      create: true
+    ~/.tmux/plugins/tmux-resurrect/save_command_strategies/pgrep_safe.sh:
+      path: tmux/pgrep_safe.sh
+      create: true
 
 - create: ['~/.vim', '~/.vim/_swaps', '~/.vim/_backups']
 

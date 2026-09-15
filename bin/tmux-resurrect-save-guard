@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# Serialising wrapper around tmux-resurrect's save.sh.
+#
+# Why this exists: tmux-continuum stamps its "last save" timestamp when a save is
+# SPAWNED, not when it completes, and its own lock self-expires after 100-200s.
+# So if a save ever takes longer than @continuum-save-interval, continuum starts
+# another one on top, forever. Concurrent saves then contend on the kernel
+# process-table lock and scale NEGATIVELY (measured: ~1.2x slowdown per extra
+# concurrent save), so the pile-up never drains.
+#
+# This wrapper holds a lock for the FULL duration of the save. If a save is
+# already running, this tick is skipped rather than stacked. Worst case you miss
+# some snapshots; you can never accumulate them.
+#
+# Lives outside the plugin directory so `tpm` updates cannot clobber it.
+
+LOCK_DIR="${TMPDIR:-/tmp}/tmux-resurrect-save.lock"
+REAL_SAVE="$HOME/.tmux/plugins/tmux-resurrect/scripts/save.sh"
+
+[ -x "$REAL_SAVE" ] || exit 0
+
+# Try to acquire. mkdir is atomic.
+if ! mkdir "$LOCK_DIR" 2>/dev/null; then
+  # Lock held. Is the holder actually alive, or did it die mid-save?
+  holder="$(cat "$LOCK_DIR/pid" 2>/dev/null)"
+  if [ -n "$holder" ] && kill -0 "$holder" 2>/dev/null; then
+    exit 0 # a save is genuinely in flight; skip this tick
+  fi
+  # Stale lock from a killed save - take it over.
+  rm -rf "$LOCK_DIR" 2>/dev/null
+  mkdir "$LOCK_DIR" 2>/dev/null || exit 0
+fi
+
+echo "$$" > "$LOCK_DIR/pid" 2>/dev/null
+trap 'rm -rf "$LOCK_DIR" 2>/dev/null' EXIT INT TERM HUP
+
+"$REAL_SAVE" "$@"
