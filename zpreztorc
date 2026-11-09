@@ -48,7 +48,7 @@ zstyle ':prezto:module:editor' key-bindings 'vi'
 #
 
 # Disable safe-ops (interactive rm/cp/mv/ln) for non-interactive agents.
-if [[ -z "$CLAUDE_CODE" ]]; then
+if [[ -z "$CLAUDECODE" ]]; then
   zstyle ':prezto:module:utility' safe-ops 'yes'
 else
   zstyle ':prezto:module:utility' safe-ops 'no'
